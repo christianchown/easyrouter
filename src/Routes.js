@@ -50,6 +50,17 @@ class Routes extends React.Component {
       <Consumer>
         {({setAuth, auth}) => (
           <React.Fragment>
+
+            {!auth.authenticated && (
+              <EasyRouter
+                routes={unauthRoutes}
+                initialRoute="Intro"
+                router={(router) => {
+                  this.setRouter(router);
+                }}
+              />
+            )}
+
             {auth.authenticated && (
               <Drawer
                 navigationView={() => <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />}
@@ -65,15 +76,7 @@ class Routes extends React.Component {
                 </Tabs>
               </Drawer>
             )}
-            {!auth.authenticated && (
-              <EasyRouter
-                routes={unauthRoutes}
-                initialRoute="Intro"
-                router={(router) => {
-                  this.setRouter(router);
-                }}
-              />
-            )}
+
           </React.Fragment>
         )}
       </Consumer>
