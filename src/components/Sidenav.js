@@ -1,24 +1,14 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import baseStyles from '../baseStyles';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#eccfd1',
-    justifyContent: 'center',
-    alignItems: 'center',
+    ...baseStyles.container,
+    backgroundColor: '#5c3c10',
   },
-  button: {
-    marginTop: 20,
-    backgroundColor: 'rgba(0,0,0,.4)',
-    padding: 10,
-    marginBottom: 20,
-  },
-  text: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
-  },
+  button: baseStyles.button,
+  text: baseStyles.text,
 });
 
 const animation = {type: 'right'};
@@ -26,9 +16,9 @@ const animation = {type: 'right'};
 const Sidenav = ({router, setAuth, closeDrawer}) => (
   <View style={styles.container}>
     <Text style={styles.text}>
-      This is the sidebar.
+      &lt;Sidenav /&gt;
       {'\n'}
-      It has a light pink background.
+      {'\n'}
     </Text>
 
     <TouchableOpacity

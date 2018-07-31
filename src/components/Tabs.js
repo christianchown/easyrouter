@@ -1,29 +1,24 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 const {width} = Dimensions.get('screen');
+import baseStyles from '../baseStyles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column-reverse',
   },
   tabs: {
-    position: 'absolute',
     backgroundColor: '#f0e3c4',
-    top: 0,
     width,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
   button: {
-    backgroundColor: 'rgba(0,0,0,.4)',
-    padding: 10,
+    ...baseStyles.button,
     margin: 10,
   },
-  text: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
-  },
+  text: baseStyles.text,
 });
 
 const Tabs = ({router, openDrawer, children}) => (

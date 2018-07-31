@@ -1,23 +1,14 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import baseStyles from '../baseStyles';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    ...baseStyles.container,
     backgroundColor: '#59057b',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  button: {
-    backgroundColor: 'rgba(0,0,0,.4)',
-    padding: 10,
-    margin: 20,
-  },
-  text: {
-    color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
-  },
+  button: baseStyles.button,
+  text: baseStyles.text,
 });
 
 const animation = {type: 'top', duration: 1000};
@@ -30,9 +21,8 @@ const LoggedIn2 = ({router}) => (
         router.pop(animation);
       }}>
       <Text style={styles.text}>
-        This is screens/LoggedIn2
+        &lt;LoggedIn2 /&gt;
         {'\n'}
-        It has a purple background.
         {'\n'}
         Click this to pop({JSON.stringify(animation)})
       </Text>
