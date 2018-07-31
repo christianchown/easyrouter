@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const animation = {type: 'fade', duration: 1000, useNativeDriver: true};
+const animation = {type: 'fade', duration: 1000};
 
 const Unauthenticated = ({router}) => (
   <Consumer>
