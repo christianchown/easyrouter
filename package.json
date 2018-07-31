@@ -1,0 +1,43 @@
+{
+  "name": "easyrouter",
+  "version": "0.0.1",
+  "author": "Christian Chown",
+  "license": "WTFPL",
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "lint": "eslint src/**/*.* --ext .js",
+    "lint_fix": "eslint src/**/*.* --ext .js --fix"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.2",
+    "react": "^16.3.1",
+    "react-native": "^0.55.4",
+    "react-native-drawer-layout-polyfill": "^2.0.0",
+    "react-native-easy-router": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-native": "4.0.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.4.0",
+    "jest": "^22.1.4",
+    "prettier": "^1.10.2",
+    "react-dom": "^16.1.1",
+    "react-test-renderer": "^16.1.1",
+    "remotedev-rn-debugger": "^0.8.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
