@@ -1,5 +1,5 @@
 import React from 'react';
-import EasyRouter from 'react-native-easy-router';
+import EasyRouter from './react-native-easy-router/index';
 
 import {Consumer} from './ContextStore';
 import Drawer from './components/Drawer';
@@ -30,6 +30,17 @@ class Routes extends React.Component {
   }
 
   setRouter = (router) => {
+    router.addAnimation(
+      'effect',
+      {
+        opacity: 0,
+        transform: [{scale: 0}],
+      },
+      {
+        opacity: 1,
+        transform: [{scale: 1}],
+      },
+    );
     this.setState({router});
   };
 
@@ -50,7 +61,6 @@ class Routes extends React.Component {
       <Consumer>
         {({setAuth, auth}) => (
           <React.Fragment>
-
             {!auth.authenticated && (
               <EasyRouter
                 routes={unauthRoutes}
@@ -63,9 +73,11 @@ class Routes extends React.Component {
 
             {auth.authenticated && (
               <Drawer
-                navigationView={() => <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />}
+                navigationView={() => (
+                  <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />
+                )}
                 ref={this.drawer}>
-                <Tabs router={this.state.router} openDrawer={this.openDrawer}>
+                <Tabs initialRoute="LoggedIn" router={this.state.router} openDrawer={this.openDrawer}>
                   <EasyRouter
                     routes={authRoutes}
                     initialRoute="LoggedIn"
@@ -76,7 +88,6 @@ class Routes extends React.Component {
                 </Tabs>
               </Drawer>
             )}
-
           </React.Fragment>
         )}
       </Consumer>

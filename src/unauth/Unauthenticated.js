@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const animation = {type: 'fade', duration: 1000};
-
 const Unauthenticated = ({router}) => (
   <Consumer>
     {({setAuth}) => (
@@ -34,9 +32,9 @@ const Unauthenticated = ({router}) => (
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            router.pop(animation);
+            router.pop();
           }}>
-          <Text style={styles.text}>Or click this text to pop({JSON.stringify(animation)})</Text>
+          <Text style={styles.text}>Or click this text to pop()</Text>
         </TouchableOpacity>
       </View>
     )}

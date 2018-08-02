@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const animation = {type: 'right'};
+const animation = {type: 'right', duration: 1100};
 
 const Sidenav = ({router, setAuth, closeDrawer}) => (
   <View style={styles.container}>
@@ -37,17 +37,17 @@ const Sidenav = ({router, setAuth, closeDrawer}) => (
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        setAuth(false);
+        closeDrawer();
       }}>
-      <Text style={styles.text}>Click this to de-authenticate</Text>
+      <Text style={styles.text}>Close the drawer</Text>
     </TouchableOpacity>
 
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        closeDrawer();
+        setAuth(false);
       }}>
-      <Text style={styles.text}>Or click this to close the drawer</Text>
+      <Text style={styles.text}>Or log out</Text>
     </TouchableOpacity>
   </View>
 );

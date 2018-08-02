@@ -11,20 +11,18 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const animation = {type: 'top', duration: 1000};
-
 const LoggedIn2 = ({router}) => (
   <View style={styles.container}>
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        router.pop(animation);
+        router.pop();
       }}>
       <Text style={styles.text}>
         &lt;LoggedIn2 /&gt;
         {'\n'}
         {'\n'}
-        Click this to pop({JSON.stringify(animation)})
+        Click this to pop()
       </Text>
     </TouchableOpacity>
   </View>

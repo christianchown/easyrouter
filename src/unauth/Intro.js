@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const animation = {type: 'fade', duration: 1000};
+const animation = {type: 'fade', duration: 1200};
 
 const Intro = ({router}) => (
   <View style={styles.container}>
