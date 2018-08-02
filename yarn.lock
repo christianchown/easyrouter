@@ -5060,7 +5060,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -5181,17 +5181,11 @@ react-native-drawer-layout@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-2.0.0.tgz#8ce1e4027bd3f3a09045afdb46080e18346be232"
 
-react-native-easy-router@^2.0.3:
+react-native-easy-router@christianchown/react-native-easy-router.git:
   version "2.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-easy-router/-/react-native-easy-router-2.0.3.tgz#8e04f738d4055ea19e15258894d77dfc2dbac17b"
+  resolved "https://codeload.github.com/christianchown/react-native-easy-router/tar.gz/094bf92ab2ab172af0af5c6fc325bf7576d136bb"
   dependencies:
     react-native-animatable-promise "^1.2.4"
-
-react-native-tab-view@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-1.0.2.tgz#66e0bc6d38a227ed2b212e3a256b7902f6ce02ed"
-  dependencies:
-    prop-types "^15.6.1"
 
 react-native@^0.55.4:
   version "0.55.4"
