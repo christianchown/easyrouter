@@ -1,5 +1,5 @@
 import React from 'react';
-import EasyRouter from './react-native-easy-router/index';
+import EasyRouter from 'react-native-easy-router';
 
 import {Consumer} from './ContextStore';
 import Drawer from './components/Drawer';
