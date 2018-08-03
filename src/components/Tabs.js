@@ -35,19 +35,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
+const customAnimation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
+const animation = {type: 'bottom', duration: 1100, easing: 'ease-in-out-back'};
 
 class Tabs extends React.Component {
   state = {selected: this.props.initialRoute};
 
   press1 = async () => {
     this.setState({selected: 'LoggedIn'});
-    await this.props.router.push.LoggedIn({}, animation);
+    const {
+      router: {push},
+      hasCustomAnimation,
+    } = this.props;
+    await push.LoggedIn({}, hasCustomAnimation ? customAnimation : animation);
   };
 
   press2 = async () => {
     this.setState({selected: 'LoggedIn2'});
-    await this.props.router.push.LoggedIn2({}, animation);
+    const {
+      router: {push},
+      hasCustomAnimation,
+    } = this.props;
+    await push.LoggedIn2({}, hasCustomAnimation ? customAnimation : animation);
   };
 
   pressMenu = () => {
@@ -55,7 +64,7 @@ class Tabs extends React.Component {
   };
 
   render() {
-    const {children} = this.props;
+    const {children, hasCustomAnimation} = this.props;
     const {selected} = this.state;
     return (
       <View style={styles.container}>
@@ -74,7 +83,7 @@ class Tabs extends React.Component {
               <Text style={styles.text}>MENU</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.tabsText}>{JSON.stringify(animation)}</Text>
+          <Text style={styles.tabsText}>{JSON.stringify(hasCustomAnimation ? customAnimation : animation)}</Text>
         </View>
       </View>
     );

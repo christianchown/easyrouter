@@ -25,23 +25,26 @@ class Routes extends React.Component {
     super(props);
     this.state = {
       router: undefined,
+      hasCustomAnimation: false,
     };
     this.drawer = React.createRef();
   }
 
   setRouter = (router) => {
-    router.addAnimation(
-      'effect',
-      {
-        opacity: 0,
-        transform: [{scale: 0}],
-      },
-      {
-        opacity: 1,
-        transform: [{scale: 1}],
-      },
-    );
-    this.setState({router});
+    if (router.addAnimation) {
+      router.addAnimation(
+        'effect',
+        {
+          opacity: 0,
+          transform: [{scale: 0}],
+        },
+        {
+          opacity: 1,
+          transform: [{scale: 1}],
+        },
+      );
+    }
+    this.setState({router, hasCustomAnimation: !!router.addAnimation});
   };
 
   closeDrawer = () => {
@@ -77,7 +80,11 @@ class Routes extends React.Component {
                   <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />
                 )}
                 ref={this.drawer}>
-                <Tabs initialRoute="LoggedIn" router={this.state.router} openDrawer={this.openDrawer}>
+                <Tabs
+                  initialRoute="LoggedIn"
+                  router={this.state.router}
+                  openDrawer={this.openDrawer}
+                  hasCustomAnimation={this.state.hasCustomAnimation}>
                   <EasyRouter
                     routes={authRoutes}
                     initialRoute="LoggedIn"
