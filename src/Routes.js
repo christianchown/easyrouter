@@ -20,6 +20,20 @@ const authRoutes = {
   LoggedIn2,
 };
 
+const animations = {
+  effect: [
+    {
+      opacity: 0,
+      transform: [{scale: 0}],
+    },
+    {
+      opacity: 1,
+      transform: [{scale: 1}],
+    },
+    true
+  ],
+};
+
 class Routes extends React.Component {
   constructor(props) {
     super(props);
@@ -30,17 +44,6 @@ class Routes extends React.Component {
   }
 
   setRouter = (router) => {
-    router.addAnimation(
-      'effect',
-      {
-        opacity: 0,
-        transform: [{scale: 0}],
-      },
-      {
-        opacity: 1,
-        transform: [{scale: 1}],
-      },
-    );
     this.setState({router});
   };
 
@@ -56,6 +59,10 @@ class Routes extends React.Component {
     }
   };
 
+  onStackChange = (stack) => {
+    console.table(stack);
+  };
+
   render() {
     return (
       <Consumer>
@@ -65,6 +72,8 @@ class Routes extends React.Component {
               <EasyRouter
                 routes={unauthRoutes}
                 initialRoute="Intro"
+                animations={animations}
+                onStackChange={this.onStackChange}
                 router={(router) => {
                   this.setRouter(router);
                 }}
@@ -81,6 +90,8 @@ class Routes extends React.Component {
                   <EasyRouter
                     routes={authRoutes}
                     initialRoute="LoggedIn"
+                    animations={animations}
+                    onStackChange={this.onStackChange}
                     router={(router) => {
                       this.setRouter(router);
                     }}
