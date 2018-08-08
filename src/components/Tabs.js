@@ -42,12 +42,18 @@ class Tabs extends React.Component {
 
   press1 = async () => {
     this.setState({selected: 'LoggedIn'});
-    await this.props.router.push.LoggedIn({}, animation);
+    const {
+      router: {push},
+    } = this.props;
+    await push.LoggedIn({}, animation);
   };
 
   press2 = async () => {
     this.setState({selected: 'LoggedIn2'});
-    await this.props.router.push.LoggedIn2({}, animation);
+    const {
+      router: {push},
+    } = this.props;
+    await push.LoggedIn2({}, animation);
   };
 
   pressMenu = () => {

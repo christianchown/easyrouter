@@ -30,7 +30,7 @@ const animations = {
       opacity: 1,
       transform: [{scale: 1}],
     },
-    true
+    true,
   ],
 };
 
@@ -42,6 +42,10 @@ class Routes extends React.Component {
     };
     this.drawer = React.createRef();
   }
+
+  onStackChange = (stack) => {
+    console.table(stack); // eslint-disable-line no-console
+  };
 
   setRouter = (router) => {
     this.setState({router});
@@ -57,10 +61,6 @@ class Routes extends React.Component {
     if (this.drawer.current.openDrawer) {
       this.drawer.current.openDrawer();
     }
-  };
-
-  onStackChange = (stack) => {
-    console.table(stack);
   };
 
   render() {
