@@ -5,15 +5,9 @@ import {Consumer} from './ContextStore';
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
-import Intro from './unauth/Intro';
-import Unauthenticated from './unauth/Unauthenticated';
 import LoggedIn from './auth/LoggedIn';
 import LoggedIn2 from './auth/LoggedIn2';
-
-const unauthRoutes = {
-  Intro,
-  Unauthenticated,
-};
+import unauthRoutes from './unauth';
 
 const authRoutes = {
   LoggedIn,
@@ -71,7 +65,7 @@ class Routes extends React.Component {
             {!auth.authenticated && (
               <EasyRouter
                 routes={unauthRoutes}
-                initialRoute="Intro"
+                initialRoute="CodeOrLogin"
                 animations={animations}
                 onStackChange={this.onStackChange}
                 router={(router) => {
