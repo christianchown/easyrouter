@@ -4,7 +4,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import baseStyles from '../baseStyles';
 import animation from './animation';
-import {Popper} from './index';
+import Popper from '../components/Popper';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,6 +37,7 @@ const Login = ({router, login}) => (
     </TouchableOpacity>
 
     <Popper router={router} />
+    <Stack />
   </View>
 );
 

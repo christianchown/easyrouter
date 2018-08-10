@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +28,8 @@ const LoggedIn = ({router}) => (
         Click this to push.LoggedIn2({'{}'}, {JSON.stringify(animation)})
       </Text>
     </TouchableOpacity>
+
+    <Stack />
   </View>
 );
 

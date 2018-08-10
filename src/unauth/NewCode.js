@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import baseStyles from '../baseStyles';
-import {Popper} from './index';
+import Popper from '../components/Popper';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,5 +18,6 @@ export default ({router}) => (
     <Text style={styles.text}>&lt;NewCode /&gt;</Text>
 
     <Popper router={router} />
+    <Stack />
   </View>
 );

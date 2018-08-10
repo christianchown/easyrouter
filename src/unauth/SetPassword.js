@@ -3,6 +3,7 @@ import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import baseStyles from '../baseStyles';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,6 +25,8 @@ const SetPassword = ({login}) => (
       }}>
       <Text style={styles.text}>Click this to set password</Text>
     </TouchableOpacity>
+
+    <Stack />
   </View>
 );
 

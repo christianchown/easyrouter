@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
 import animation from './animation';
-import {Popper} from './index';
+import Popper from '../components/Popper';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,5 +35,7 @@ export default ({router}) => (
     </TouchableOpacity>
 
     <Popper router={router} />
+
+    <Stack />
   </View>
 );

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {connect} from 'react-redux';
 import baseStyles from '../baseStyles';
 
 const {width} = Dimensions.get('screen');
@@ -38,10 +39,8 @@ const styles = StyleSheet.create({
 const animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
 
 class Tabs extends React.Component {
-  state = {selected: this.props.initialRoute};
 
   press1 = async () => {
-    this.setState({selected: 'LoggedIn'});
     const {
       router: {push},
     } = this.props;
@@ -49,7 +48,6 @@ class Tabs extends React.Component {
   };
 
   press2 = async () => {
-    this.setState({selected: 'LoggedIn2'});
     const {
       router: {push},
     } = this.props;
@@ -61,8 +59,8 @@ class Tabs extends React.Component {
   };
 
   render() {
-    const {children} = this.props;
-    const {selected} = this.state;
+    const {children, screen} = this.props;
+    const {route: selected} = screen;
     return (
       <View style={styles.container}>
         {children}
@@ -87,4 +85,8 @@ class Tabs extends React.Component {
   }
 }
 
-export default Tabs;
+const mapStateToProps = ({router}) => ({
+  screen: router.stack[router.stack.length - 1],
+});
+
+export default connect(mapStateToProps)(Tabs);

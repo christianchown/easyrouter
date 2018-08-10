@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,8 @@ const LoggedIn2 = ({router}) => (
         Click this to pop()
       </Text>
     </TouchableOpacity>
+
+    <Stack />
   </View>
 );
 

@@ -40,7 +40,7 @@ class Routes extends React.Component {
   }
 
   onStackChange = (stack) => {
-    console.table(stack); // eslint-disable-line no-console
+    this.props.setStack(stack);
   };
 
   setRouter = (router) => {
@@ -78,23 +78,24 @@ class Routes extends React.Component {
 
         {auth.login && !auth.retrieved && <Retrieval router={router} retrieveAmount={auth.retrieveAmount} />}
 
-        {auth.login && auth.retrieved && (
-          <Drawer
-            navigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
-            ref={this.drawer}>
-            <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer}>
-              <EasyRouter
-                routes={authRoutes}
-                initialRoute="LoggedIn"
-                animations={animations}
-                onStackChange={this.onStackChange}
-                router={(r) => {
-                  this.setRouter(r);
-                }}
-              />
-            </Tabs>
-          </Drawer>
-        )}
+        {auth.login &&
+          auth.retrieved && (
+            <Drawer
+              navigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
+              ref={this.drawer}>
+              <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer}>
+                <EasyRouter
+                  routes={authRoutes}
+                  initialRoute="LoggedIn"
+                  animations={animations}
+                  onStackChange={this.onStackChange}
+                  router={(r) => {
+                    this.setRouter(r);
+                  }}
+                />
+              </Tabs>
+            </Drawer>
+          )}
       </React.Fragment>
     );
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
 import animation from './animation';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,5 +32,7 @@ export default ({router}) => (
       }}>
       <Text style={styles.text}>Click here if you already have a login</Text>
     </TouchableOpacity>
+
+    <Stack />
   </View>
 );

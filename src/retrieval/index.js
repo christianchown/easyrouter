@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
+import Stack from '../components/Stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +27,8 @@ const Retrieval = ({retrieveAmount, logout}) => (
       }}>
       <Text style={styles.text}>Click this to cancel</Text>
     </TouchableOpacity>
+
+    <Stack />
   </View>
 );
 

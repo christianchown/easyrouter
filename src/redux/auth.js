@@ -1,4 +1,3 @@
-import {compose} from 'redux';
 import {Cmd, loop} from 'redux-loop';
 
 const initialState = {
@@ -9,7 +8,9 @@ const initialState = {
 
 export {initialState};
 
-function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)) }
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 const retrieve = async (num) => {
   await sleep(100);
