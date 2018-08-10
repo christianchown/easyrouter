@@ -1,28 +1,30 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
 
 const styles = StyleSheet.create({
   container: {
     ...baseStyles.container,
-    backgroundColor: '#0f0766',
+    backgroundColor: '#233142',
   },
   button: baseStyles.button,
   text: baseStyles.text,
 });
 
-const SetPassword = ({login}) => (
+const Retrieval = ({retrieveAmount, logout}) => (
   <View style={styles.container}>
-    <Text style={styles.text}>&lt;SetPassword /&gt;</Text>
+    <Text style={styles.text}>&lt;Retrieval /&gt;</Text>
+
+    <Text style={styles.text}>{retrieveAmount}%</Text>
 
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        login();
+        logout();
       }}>
-      <Text style={styles.text}>Click this to set password</Text>
+      <Text style={styles.text}>Click this to cancel</Text>
     </TouchableOpacity>
   </View>
 );
@@ -30,7 +32,7 @@ const SetPassword = ({login}) => (
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      login: () => ({type: 'AUTH_LOGIN'}),
+      logout: () => ({type: 'AUTH_LOGOUT'}),
     },
     dispatch,
   );
@@ -38,4 +40,4 @@ const mapDispatchToProps = (dispatch) =>
 export default connect(
   null,
   mapDispatchToProps,
-)(SetPassword);
+)(Retrieval);

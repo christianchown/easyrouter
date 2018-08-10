@@ -9,11 +9,13 @@
     "lint_fix": "eslint src/**/*.* --ext .js --fix"
   },
   "dependencies": {
+    "es6-symbol": "^3.1.1",
     "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-native": "0.55.4",
     "react-native-drawer-layout-polyfill": "^2.0.0",
     "react-native-easy-router": "christianchown/react-native-easy-router.git#set-stack",
+    "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-loop": "^4.3.3"
   },

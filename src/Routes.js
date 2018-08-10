@@ -1,13 +1,15 @@
 import React from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import EasyRouter from 'react-native-easy-router';
 
-import {Consumer} from './ContextStore';
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
 import LoggedIn from './auth/LoggedIn';
 import LoggedIn2 from './auth/LoggedIn2';
 import unauthRoutes from './unauth';
+import Retrieval from './retrieval';
 
 const authRoutes = {
   LoggedIn,
@@ -58,46 +60,60 @@ class Routes extends React.Component {
   };
 
   render() {
+    const {auth, logout} = this.props;
+    const {router} = this.state;
     return (
-      <Consumer>
-        {({setAuth, auth}) => (
-          <React.Fragment>
-            {!auth.authenticated && (
+      <React.Fragment>
+        {!auth.login && (
+          <EasyRouter
+            routes={unauthRoutes}
+            initialRoute="CodeOrLogin"
+            animations={animations}
+            onStackChange={this.onStackChange}
+            router={(r) => {
+              this.setRouter(r);
+            }}
+          />
+        )}
+
+        {auth.login && !auth.retrieved && <Retrieval router={router} retrieveAmount={auth.retrieveAmount} />}
+
+        {auth.login && auth.retrieved && (
+          <Drawer
+            navigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
+            ref={this.drawer}>
+            <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer}>
               <EasyRouter
-                routes={unauthRoutes}
-                initialRoute="CodeOrLogin"
+                routes={authRoutes}
+                initialRoute="LoggedIn"
                 animations={animations}
                 onStackChange={this.onStackChange}
-                router={(router) => {
-                  this.setRouter(router);
+                router={(r) => {
+                  this.setRouter(r);
                 }}
               />
-            )}
-
-            {auth.authenticated && (
-              <Drawer
-                navigationView={() => (
-                  <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />
-                )}
-                ref={this.drawer}>
-                <Tabs initialRoute="LoggedIn" router={this.state.router} openDrawer={this.openDrawer}>
-                  <EasyRouter
-                    routes={authRoutes}
-                    initialRoute="LoggedIn"
-                    animations={animations}
-                    onStackChange={this.onStackChange}
-                    router={(router) => {
-                      this.setRouter(router);
-                    }}
-                  />
-                </Tabs>
-              </Drawer>
-            )}
-          </React.Fragment>
+            </Tabs>
+          </Drawer>
         )}
-      </Consumer>
+      </React.Fragment>
     );
   }
 }
 
-export default Routes;
+const mapStateToProps = ({auth}) => ({
+  auth,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      setStack: (stack) => ({type: 'ROUTER_STACK', stack}),
+      logout: () => ({type: 'AUTH_LOGOUT'}),
+    },
+    dispatch,
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Routes);

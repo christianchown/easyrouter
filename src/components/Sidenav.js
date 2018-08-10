@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
 const animation = {type: 'right', duration: 1100};
 
-const Sidenav = ({router, setAuth, closeDrawer}) => (
+const Sidenav = ({router, logout, closeDrawer}) => (
   <View style={styles.container}>
     <Text style={styles.text}>
       &lt;Sidenav /&gt;
@@ -45,7 +45,7 @@ const Sidenav = ({router, setAuth, closeDrawer}) => (
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        setAuth(false);
+        logout();
       }}>
       <Text style={styles.text}>Or log out</Text>
     </TouchableOpacity>
