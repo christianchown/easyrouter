@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const animation: Animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
+const anim: Animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
 
 interface Props {
   initialRoute: string;
@@ -58,14 +58,14 @@ class Tabs extends React.Component<TabsProps> {
     const {
       router: {push},
     } = this.props;
-    await push.LoggedIn({}, animation);
+    await push.LoggedIn({}, anim);
   };
 
   press2 = async () => {
     const {
       router: {push},
     } = this.props;
-    await push.LoggedIn2({}, animation);
+    await push.LoggedIn2({}, anim);
   };
 
   pressMenu = () => {
@@ -92,7 +92,7 @@ class Tabs extends React.Component<TabsProps> {
               <Text style={styles.text}>MENU</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.tabsText}>{JSON.stringify(animation)}</Text>
+          <Text style={styles.tabsText}>{JSON.stringify(anim)}</Text>
         </View>
       </View>
     );

@@ -5,8 +5,8 @@
   "license": "WTFPL",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "eslint src/**/*.* --ext .js",
-    "lint_fix": "eslint src/**/*.* --ext .js --fix"
+    "lint": "tslint {src,server}/**/*.{ts,tsx} --format verbose",
+    "lint_fix": "tslint {src,server}/**/*.{ts,tsx} --fix --format verbose"
   },
   "dependencies": {
     "es6-symbol": "^3.1.1",

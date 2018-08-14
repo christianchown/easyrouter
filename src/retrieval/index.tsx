@@ -21,11 +21,12 @@ interface Props {
 
 interface PropsFromDispatch {
   logout: () => void;
+  forceEnd: () => void;
 }
 
 type RetrievalProps = Props & PropsFromDispatch;
 
-const Retrieval: React.SFC<RetrievalProps> = ({retrieveAmount, logout}) => (
+const Retrieval: React.SFC<RetrievalProps> = ({retrieveAmount, logout, forceEnd}) => (
   <View style={styles.container}>
     <Text style={styles.text}>&lt;Retrieval /&gt;</Text>
 
@@ -40,6 +41,15 @@ const Retrieval: React.SFC<RetrievalProps> = ({retrieveAmount, logout}) => (
       <Text style={styles.text}>Click this to cancel</Text>
     </TouchableOpacity>
 
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => {
+        forceEnd();
+      }}
+    >
+      <Text style={styles.text}>Click this to force end</Text>
+    </TouchableOpacity>
+
     <Stack />
   </View>
 );
@@ -48,6 +58,7 @@ const mapdispatchToProps = (dispatch: Dispatch): PropsFromDispatch =>
   bindActionCreators(
     {
       logout: () => ({type: 'AUTH_LOGOUT'}),
+      forceEnd: () => ({type: 'AUTH_END_RETRIEVE'}),
     },
     dispatch,
   );

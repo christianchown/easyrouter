@@ -116,6 +116,7 @@ class Routes extends React.Component<RoutesProps, State> {
                   initialRoute="LoggedIn"
                   animations={animations}
                   onStackChange={this.onStackChange}
+                  onBeforeStackChange={this.onBeforeStackChange}
                   router={(r) => {
                     this.setRouter(r);
                   }}
