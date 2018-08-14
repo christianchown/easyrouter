@@ -17,7 +17,8 @@
       "../node_modules/@types"
     ],
     "paths": {
-      "react-native-easy-router": ["../@types/react-native-easy-router"]
+      "react-native-easy-router": ["../@types/react-native-easy-router"],
+      "react-native-drawer-layout-polyfill": ["../@types/react-native-drawer-layout-polyfill"]
     },
     "esModuleInterop": true
   },

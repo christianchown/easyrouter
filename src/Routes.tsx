@@ -67,13 +67,13 @@ class Routes extends React.Component<RoutesProps, State> {
   };
 
   closeDrawer = () => {
-    if (this.drawer.current.closeDrawer) {
+    if (this.drawer.current && this.drawer.current.closeDrawer) {
       this.drawer.current.closeDrawer();
     }
   };
 
   openDrawer = () => {
-    if (this.drawer.current.openDrawer) {
+    if (this.drawer.current && this.drawer.current.openDrawer) {
       this.drawer.current.openDrawer();
     }
   };

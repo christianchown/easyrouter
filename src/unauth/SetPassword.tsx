@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const SetPassword = ({login}: {login:  () => void}) => (
+const SetPassword = ({login}: {login: () => void}) => (
   <View style={styles.container}>
     <Text style={styles.text}>&lt;SetPassword /&gt;</Text>
 
@@ -22,7 +22,8 @@ const SetPassword = ({login}: {login:  () => void}) => (
       style={styles.button}
       onPress={() => {
         login();
-      }}>
+      }}
+    >
       <Text style={styles.text}>Click this to set password</Text>
     </TouchableOpacity>
 

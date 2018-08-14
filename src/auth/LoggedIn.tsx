@@ -25,12 +25,14 @@ const LoggedIn = ({router}: Props) => (
       style={styles.button}
       onPress={() => {
         router.push.LoggedIn2({}, animation);
-      }}>
+      }}
+    >
       <Text style={styles.text}>
         &lt;LoggedIn /&gt;
         {'\n'}
         {'\n'}
-        Click this to push.LoggedIn2({'{}'}, {JSON.stringify(animation)})
+        Click this to push.LoggedIn2(
+        {'{}'}, {JSON.stringify(animation)})
       </Text>
     </TouchableOpacity>
 

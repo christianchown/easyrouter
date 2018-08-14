@@ -11,7 +11,7 @@ interface Props {
 
 type DrawerProps = Props & DrawerLayoutAndroidProps;
 
-const Drawer = React.forwardRef(({enabled, children, ...rest}: DrawerProps, ref) => (
+const Drawer = React.forwardRef(({enabled, children, ...rest}: DrawerProps, ref?: React.Ref<DrawerLayout>) => (
   <DrawerLayout drawerWidth={width * 0.75} drawerLockMode={!enabled ? 'unlocked' : 'locked-closed'} ref={ref} {...rest}>
     {children}
   </DrawerLayout>

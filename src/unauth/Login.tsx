@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {Router} from 'react-native-easy-router';
-import {bindActionCreators} from 'redux';
-import {Dispatch, connect} from 'react-redux';
+import {Dispatch, bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import baseStyles from '../baseStyles';
 import animation from './animation';
 import Popper from '../components/Popper';
@@ -30,7 +30,8 @@ const Login = ({router, login}: Props) => (
       style={styles.button}
       onPress={() => {
         login();
-      }}>
+      }}
+    >
       <Text style={styles.text}>Click this to login</Text>
     </TouchableOpacity>
 
@@ -38,7 +39,8 @@ const Login = ({router, login}: Props) => (
       style={styles.button}
       onPress={() => {
         router.push.NewCode({}, animation);
-      }}>
+      }}
+    >
       <Text style={styles.text}>Request a new code</Text>
     </TouchableOpacity>
 

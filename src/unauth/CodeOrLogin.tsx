@@ -26,7 +26,8 @@ export default ({router}: Props) => (
       style={styles.button}
       onPress={() => {
         router.push.CodeEntry({}, animation);
-      }}>
+      }}
+    >
       <Text style={styles.text}>Click here if you have a code</Text>
     </TouchableOpacity>
 
@@ -34,7 +35,8 @@ export default ({router}: Props) => (
       style={styles.button}
       onPress={() => {
         router.push.Login({}, animation);
-      }}>
+      }}
+    >
       <Text style={styles.text}>Click here if you already have a login</Text>
     </TouchableOpacity>
 
