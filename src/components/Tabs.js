@@ -36,21 +36,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
+const anim = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
 
 class Tabs extends React.Component {
   press1 = async () => {
     const {
       router: {push},
     } = this.props;
-    await push.LoggedIn({}, animation);
+    await push.LoggedIn({}, anim);
   };
 
   press2 = async () => {
     const {
       router: {push},
     } = this.props;
-    await push.LoggedIn2({}, animation);
+    await push.LoggedIn2({}, anim);
   };
 
   pressMenu = () => {
@@ -77,7 +77,7 @@ class Tabs extends React.Component {
               <Text style={styles.text}>MENU</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.tabsText}>{JSON.stringify(animation)}</Text>
+          <Text style={styles.tabsText}>{JSON.stringify(anim)}</Text>
         </View>
       </View>
     );
