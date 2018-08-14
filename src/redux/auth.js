@@ -56,7 +56,7 @@ const reducer = (state = initialState, action) => {
         Cmd.run(retrieve, {
           args: [retrieveAmount],
           successActionCreator: (num) => {
-            if (num > 100) {
+            if ((num > 100) || state.retrieved) {
               return {type: 'AUTH_END_RETRIEVE'};
             }
             return {type: 'AUTH_INC_RETRIEVE'};

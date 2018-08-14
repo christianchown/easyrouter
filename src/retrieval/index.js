@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const Retrieval = ({retrieveAmount, logout}) => (
+const Retrieval = ({retrieveAmount, logout, forceEnd}) => (
   <View style={styles.container}>
     <Text style={styles.text}>&lt;Retrieval /&gt;</Text>
 
@@ -28,6 +28,14 @@ const Retrieval = ({retrieveAmount, logout}) => (
       <Text style={styles.text}>Click this to cancel</Text>
     </TouchableOpacity>
 
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => {
+        forceEnd();
+      }}>
+      <Text style={styles.text}>Click this to force end</Text>
+    </TouchableOpacity>
+
     <Stack />
   </View>
 );
@@ -36,6 +44,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       logout: () => ({type: 'AUTH_LOGOUT'}),
+      forceEnd: () => ({type: 'AUTH_END_RETRIEVE'}),
     },
     dispatch,
   );
