@@ -1,7 +1,7 @@
 import React from 'react';
 import {Dispatch, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import EasyRouter, {Route, Router, CustomAnimations} from 'react-native-easy-router';
+import EasyRouter, {Route, Router, CustomAnimations, Animation} from 'react-native-easy-router';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 
 import Drawer from './components/Drawer';
@@ -39,6 +39,7 @@ interface PropsFromState {
 interface PropsFromDispatch {
   logout: () => void;
   setStack: (stack: Array<Route>) => void;
+  setTransition: (animation: Animation, from: Array<Route>, to: Array<Route>) => void;
 }
 
 type RoutesProps = PropsFromState & PropsFromDispatch;
@@ -60,6 +61,10 @@ class Routes extends React.Component<RoutesProps, State> {
 
   onStackChange = (stack: Array<Route>) => {
     this.props.setStack(stack);
+  };
+
+  onBeforeStackChange = (animation: Animation, from: Array<Route>, to: Array<Route>) => {
+    this.props.setTransition(animation, from, to);
   };
 
   setRouter = (router: Router) => {
@@ -89,6 +94,7 @@ class Routes extends React.Component<RoutesProps, State> {
             initialRoute="CodeOrLogin"
             animations={animations}
             onStackChange={this.onStackChange}
+            onBeforeStackChange={this.onBeforeStackChange}
             router={(r) => {
               this.setRouter(r);
             }}
@@ -130,6 +136,7 @@ const mapDispatchToProps = (dispatch: Dispatch): PropsFromDispatch =>
   bindActionCreators(
     {
       setStack: (stack) => ({type: 'ROUTER_STACK', stack}),
+      setTransition: (animation, from, to) => ({type: 'ROUTER_TRANSITION', animation, from, to}),
       logout: () => ({type: 'AUTH_LOGOUT'}),
     },
     dispatch,

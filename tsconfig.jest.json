@@ -4,6 +4,7 @@
     "sourceMap": true,
     "outDir": "./lib",
     "noEmit": false,
-    "types": ["react", "react-native", "jest", "node"]
+    "types": ["react", "react-native", "jest"],
+    "lib": ["es6"]
   }
 }

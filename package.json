@@ -30,6 +30,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "prettier": "^1.10.2",
     "react-dom": "^16.1.1",
+    "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "^16.1.1",
     "remote-redux-devtools": "^0.5.13",
     "remotedev-rn-debugger": "^0.8.3",
