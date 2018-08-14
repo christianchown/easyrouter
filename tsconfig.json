@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "noEmit": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "baseUrl": "./src",
+    "typeRoots": [
+      "../@types",
+      "../node_modules/@types"
+    ],
+    "paths": {
+      "react-native-easy-router": ["../@types/react-native-easy-router"]
+    },
+    "esModuleInterop": true
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules"]
+}

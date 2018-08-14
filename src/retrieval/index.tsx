@@ -1,9 +1,10 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
+import {Dispatch, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
 import Stack from '../components/Stack';
+import {StoreState} from 'store';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +15,17 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const Retrieval = ({retrieveAmount, logout}) => (
+interface Props {
+  retrieveAmount: number;
+}
+
+interface PropsFromDispatch {
+  logout: () => void;
+}
+
+type RetrievalProps = Props & PropsFromDispatch;
+
+const Retrieval: React.SFC<RetrievalProps> = ({retrieveAmount, logout}) => (
   <View style={styles.container}>
     <Text style={styles.text}>&lt;Retrieval /&gt;</Text>
 
@@ -24,7 +35,8 @@ const Retrieval = ({retrieveAmount, logout}) => (
       style={styles.button}
       onPress={() => {
         logout();
-      }}>
+      }}
+    >
       <Text style={styles.text}>Click this to cancel</Text>
     </TouchableOpacity>
 
@@ -32,7 +44,7 @@ const Retrieval = ({retrieveAmount, logout}) => (
   </View>
 );
 
-const mapDispatchToProps = (dispatch) =>
+const mapdispatchToProps = (dispatch: Dispatch): PropsFromDispatch =>
   bindActionCreators(
     {
       logout: () => ({type: 'AUTH_LOGOUT'}),
@@ -40,7 +52,7 @@ const mapDispatchToProps = (dispatch) =>
     dispatch,
   );
 
-export default connect(
+export default connect<{}, PropsFromDispatch, Props, StoreState>(
   null,
-  mapDispatchToProps,
+  mapdispatchToProps,
 )(Retrieval);

@@ -2,6 +2,8 @@ import React from 'react';
 import {Dimensions, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {connect} from 'react-redux';
 import baseStyles from '../baseStyles';
+import {Router, Animation} from 'react-native-easy-router';
+import {Route, StoreState} from 'store';
 
 const {width} = Dimensions.get('screen');
 
@@ -36,10 +38,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
+const animation: Animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
 
-class Tabs extends React.Component {
+interface Props {
+  initialRoute: string;
+  openDrawer: () => void;
+  router: Router;
+}
 
+interface PropsFromState {
+  screen: Route;
+}
+
+type TabsProps = Props & PropsFromState;
+
+class Tabs extends React.Component<TabsProps> {
   press1 = async () => {
     const {
       router: {push},
@@ -85,8 +98,8 @@ class Tabs extends React.Component {
   }
 }
 
-const mapStateToProps = ({router}) => ({
+const mapStateToProps = ({router}: StoreState): PropsFromState => ({
   screen: router.stack[router.stack.length - 1],
 });
 
-export default connect(mapStateToProps)(Tabs);
+export default connect<PropsFromState, {}, Props, StoreState>(mapStateToProps)(Tabs);

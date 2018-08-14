@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {Router} from 'react-native-easy-router';
 import baseStyles from '../baseStyles';
 import Stack from '../components/Stack';
 
@@ -14,7 +15,11 @@ const styles = StyleSheet.create({
 
 const animation = {type: 'top', duration: 1000};
 
-const LoggedIn = ({router}) => (
+interface Props {
+  router: Router;
+}
+
+const LoggedIn = ({router}: Props) => (
   <View style={styles.container}>
     <TouchableOpacity
       style={styles.button}

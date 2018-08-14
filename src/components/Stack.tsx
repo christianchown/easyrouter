@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, ScrollView, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
+import {Route, StoreState} from '../store';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,18 +19,26 @@ const styles = StyleSheet.create({
   },
 });
 
-const Stack = ({stack}) => (
+interface PropsFromState {
+  stack: Array<Route>;
+}
+
+type StackProps = PropsFromState;
+
+const Stack: React.SFC<StackProps> = ({stack}) => (
   <View style={styles.container}>
     <ScrollView style={styles.scroll}>
       {stack.map((route, i) => (
-        <Text key={route.id}>{i+1}. {route.route} {JSON.stringify(route.params)}</Text>
+        <Text key={route.id}>
+          {i + 1}. {route.route} {JSON.stringify(route.params)}
+        </Text>
       ))}
     </ScrollView>
   </View>
 );
 
-const mapStateToProps = ({router}) => ({
+const mapStateToProps = ({router}: StoreState) => ({
   stack: router.stack,
 });
 
-export default connect(mapStateToProps)(Stack);
+export default connect<PropsFromState, {}, {}, StoreState>(mapStateToProps)(Stack);

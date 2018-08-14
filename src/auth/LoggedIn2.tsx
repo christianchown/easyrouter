@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {Router} from 'react-native-easy-router';
 import baseStyles from '../baseStyles';
 import Stack from '../components/Stack';
 
@@ -12,13 +13,18 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const LoggedIn2 = ({router}) => (
+interface Props {
+  router: Router;
+}
+
+const LoggedIn2 = ({router}: Props) => (
   <View style={styles.container}>
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
         router.pop();
-      }}>
+      }}
+    >
       <Text style={styles.text}>
         &lt;LoggedIn2 /&gt;
         {'\n'}

@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {Router} from 'react-native-easy-router';
 import baseStyles from '../baseStyles';
 
 const styles = StyleSheet.create({
@@ -13,7 +14,13 @@ const styles = StyleSheet.create({
 
 const animation = {type: 'right', duration: 1100};
 
-const Sidenav = ({router, logout, closeDrawer}) => (
+interface Props {
+  router: Router;
+  logout: () => void;
+  closeDrawer: () => void;
+}
+
+const Sidenav = ({router, logout, closeDrawer}: Props) => (
   <View style={styles.container}>
     <Text style={styles.text}>
       &lt;Sidenav /&gt;
@@ -28,9 +35,11 @@ const Sidenav = ({router, logout, closeDrawer}) => (
           router.push.LoggedIn2({}, animation);
         }
         closeDrawer();
-      }}>
+      }}
+    >
       <Text style={styles.text}>
-        Click this text to push.LoggedIn2({'{}'}, {JSON.stringify(animation)})
+        Click this text to push.LoggedIn2(
+        {'{}'}, {JSON.stringify(animation)})
       </Text>
     </TouchableOpacity>
 
@@ -38,7 +47,8 @@ const Sidenav = ({router, logout, closeDrawer}) => (
       style={styles.button}
       onPress={() => {
         closeDrawer();
-      }}>
+      }}
+    >
       <Text style={styles.text}>Close the drawer</Text>
     </TouchableOpacity>
 
@@ -46,7 +56,8 @@ const Sidenav = ({router, logout, closeDrawer}) => (
       style={styles.button}
       onPress={() => {
         logout();
-      }}>
+      }}
+    >
       <Text style={styles.text}>Or log out</Text>
     </TouchableOpacity>
   </View>

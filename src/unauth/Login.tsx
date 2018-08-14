@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {Router} from 'react-native-easy-router';
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import {Dispatch, connect} from 'react-redux';
 import baseStyles from '../baseStyles';
 import animation from './animation';
 import Popper from '../components/Popper';
@@ -16,7 +17,12 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const Login = ({router, login}) => (
+interface Props {
+  router: Router;
+  login: () => void;
+}
+
+const Login = ({router, login}: Props) => (
   <View style={styles.container}>
     <Text style={styles.text}>&lt;Login /&gt;</Text>
 
@@ -41,7 +47,7 @@ const Login = ({router, login}) => (
   </View>
 );
 
-const mapDispatchToProps = (dispatch) =>
+const mapdispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       login: () => ({type: 'AUTH_LOGIN'}),
@@ -51,5 +57,5 @@ const mapDispatchToProps = (dispatch) =>
 
 export default connect(
   null,
-  mapDispatchToProps,
+  mapdispatchToProps,
 )(Login);

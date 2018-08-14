@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import {bindActionCreators} from 'redux';
+import {Dispatch, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import baseStyles from '../baseStyles';
 import Stack from '../components/Stack';
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const SetPassword = ({login}) => (
+const SetPassword = ({login}: {login:  () => void}) => (
   <View style={styles.container}>
     <Text style={styles.text}>&lt;SetPassword /&gt;</Text>
 
@@ -30,7 +30,7 @@ const SetPassword = ({login}) => (
   </View>
 );
 
-const mapDispatchToProps = (dispatch) =>
+const mapdispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       login: () => ({type: 'AUTH_LOGIN'}),
@@ -40,5 +40,5 @@ const mapDispatchToProps = (dispatch) =>
 
 export default connect(
   null,
-  mapDispatchToProps,
+  mapdispatchToProps,
 )(SetPassword);

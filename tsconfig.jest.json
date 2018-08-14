@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "./lib",
+    "noEmit": false,
+    "types": ["react", "react-native", "jest", "node"]
+  }
+}
