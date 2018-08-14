@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
 const animation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
 
 class Tabs extends React.Component {
-
   press1 = async () => {
     const {
       router: {push},
@@ -59,7 +58,7 @@ class Tabs extends React.Component {
   };
 
   render() {
-    const {children, screen} = this.props;
+    const {children, screen, animation} = this.props;
     const {route: selected} = screen;
     return (
       <View style={styles.container}>
@@ -67,11 +66,11 @@ class Tabs extends React.Component {
         <View style={styles.header}>
           <View style={styles.tabs}>
             <TouchableOpacity style={styles.button} onPress={this.press1} disabled={selected === 'LoggedIn'}>
-              <Text style={selected === 'LoggedIn' ? styles.selectedText : styles.text}>LoggedIn</Text>
+              <Text style={selected === 'LoggedIn' && !animation ? styles.selectedText : styles.text}>LoggedIn</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={this.press2} disabled={selected === 'LoggedIn2'}>
-              <Text style={selected === 'LoggedIn2' ? styles.selectedText : styles.text}>LoggedIn2</Text>
+              <Text style={selected === 'LoggedIn2' && !animation ? styles.selectedText : styles.text}>LoggedIn2</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={this.pressMenu}>
@@ -87,6 +86,7 @@ class Tabs extends React.Component {
 
 const mapStateToProps = ({router}) => ({
   screen: router.stack[router.stack.length - 1],
+  animation: router.animation,
 });
 
 export default connect(mapStateToProps)(Tabs);

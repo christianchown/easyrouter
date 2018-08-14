@@ -43,6 +43,10 @@ class Routes extends React.Component {
     this.props.setStack(stack);
   };
 
+  onBeforeStackChange = (animation, from, to) => {
+    this.props.setTransition(animation, from, to);
+  };
+
   setRouter = (router) => {
     this.setState({router});
   };
@@ -70,6 +74,7 @@ class Routes extends React.Component {
             initialRoute="CodeOrLogin"
             animations={animations}
             onStackChange={this.onStackChange}
+            onBeforeStackChange={this.onBeforeStackChange}
             router={(r) => {
               this.setRouter(r);
             }}
@@ -109,6 +114,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       setStack: (stack) => ({type: 'ROUTER_STACK', stack}),
+      setTransition: (animation, from, to) => ({type: 'ROUTER_TRANSITION', animation, from, to}),
       logout: () => ({type: 'AUTH_LOGOUT'}),
     },
     dispatch,

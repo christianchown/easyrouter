@@ -1,5 +1,6 @@
 const initialState = {
   stack: [],
+  animation: undefined,
 };
 
 export {initialState};
@@ -14,6 +15,13 @@ const reducer = (state = initialState, action) => {
           route: route.route,
           params: route.params,
         })),
+        animation: undefined,
+      };
+
+    case 'ROUTER_TRANSITION':
+      return {
+        ...state,
+        animation: action.animation,
       };
 
     default:

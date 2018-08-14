@@ -22,7 +22,9 @@ const Stack = ({stack}) => (
   <View style={styles.container}>
     <ScrollView style={styles.scroll}>
       {stack.map((route, i) => (
-        <Text key={route.id}>{i+1}. {route.route} {JSON.stringify(route.params)}</Text>
+        <Text key={route.id}>
+          {i + 1}. {route.route} {JSON.stringify(route.params)}
+        </Text>
       ))}
     </ScrollView>
   </View>
