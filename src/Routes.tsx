@@ -110,7 +110,7 @@ class Routes extends React.Component<RoutesProps, State> {
               renderNavigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
               ref={this.drawer}
             >
-              <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer}>
+              <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer} tabs={Object.keys(authRoutes)}>
                 <EasyRouter
                   routes={authRoutes}
                   initialRoute="LoggedIn"

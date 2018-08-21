@@ -40,7 +40,7 @@ function sleep(ms: number) {
 }
 
 const retrieve = async (num: number) => {
-  await sleep(100);
+  await sleep(10);
   return Promise.resolve(num + 1);
 };
 

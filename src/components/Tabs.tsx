@@ -1,6 +1,7 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {Animated, Dimensions, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {connect} from 'react-redux';
+import {Dispatch, bindActionCreators} from 'redux';
 import baseStyles from '../baseStyles';
 import {Router, Animation} from 'react-native-easy-router';
 import {Route, StoreState} from 'store';
@@ -44,16 +45,38 @@ interface Props {
   initialRoute: string;
   openDrawer: () => void;
   router: Router;
+  tabs: Array<string>;
 }
 
 interface PropsFromState {
   screen: Route;
   animation?: Animation;
+  selectedTab: number;
+  showTab: number;
 }
 
-type TabsProps = Props & PropsFromState;
+interface PropsFromDispatch {
+  setTabs: () => void;
+}
 
-class Tabs extends React.Component<TabsProps> {
+type TabsProps = Props & PropsFromState & PropsFromDispatch;
+
+interface TabsState {
+  animation: Animated.Value;
+}
+
+class Tabs extends React.Component<TabsProps, TabsState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      animation: new Animated.Value(0),
+    };
+  }
+
+  componentDidMount() {
+    this.props.setTabs();
+  }
+
   press1 = async () => {
     const {
       router: {push},
@@ -104,4 +127,12 @@ const mapStateToProps = ({router}: StoreState): PropsFromState => ({
   animation: router.animation,
 });
 
-export default connect<PropsFromState, {}, Props, StoreState>(mapStateToProps)(Tabs);
+const mapDispatchToProps = (dispatch: Dispatch, {tabs}: Props): PropsFromDispatch =>
+  bindActionCreators(
+    {
+      setTabs: () => ({type: 'ROUTER_SET_TABS', tabs}),
+    },
+    dispatch,
+  );
+
+export default connect<PropsFromState, PropsFromDispatch, Props, StoreState>(mapStateToProps, mapDispatchToProps)(Tabs);
