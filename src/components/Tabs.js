@@ -49,16 +49,14 @@ class Tabs extends React.Component {
   componentDidUpdate(prevProps) {
     const {from, to, transition: {easing, duration} = {}} = this.props;
     if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
-      setTimeout(() => {
-        Animated.timing(this.state.animation, {
-          toValue: 1,
-          easing: easingFunctions[easing],
-          duration,
-          useNativeDriver: true,
-        }).start(() => {
-          this.setState({animation: new Animated.Value(0)});
-        });
-      }, 0);
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        easing: easingFunctions[easing],
+        duration,
+        useNativeDriver: true,
+      }).start(() => {
+        this.setState({animation: new Animated.Value(0)});
+      });
     }
   }
 
