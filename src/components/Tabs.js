@@ -54,9 +54,7 @@ class Tabs extends React.Component {
         easing: easingFunctions[easing],
         duration,
         useNativeDriver: true,
-      }).start(() => {
-        this.setState({animation: new Animated.Value(0)});
-      });
+      }).start();
     }
   }
 
