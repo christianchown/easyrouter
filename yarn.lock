@@ -4405,9 +4405,9 @@ react-native-drawer-layout@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-2.0.0.tgz#8ce1e4027bd3f3a09045afdb46080e18346be232"
 
-react-native-easy-router@christianchown/react-native-easy-router.git#set-stack:
-  version "2.3.0"
-  resolved "https://codeload.github.com/christianchown/react-native-easy-router/tar.gz/2bbd2e8b77ab7e059b11a93eb5a44ded135f9d6f"
+react-native-easy-router@christianchown/react-native-easy-router.git#all:
+  version "2.3.1"
+  resolved "https://codeload.github.com/christianchown/react-native-easy-router/tar.gz/f41d766c678efce7db19194ad8b3bf93d4aa75c2"
   dependencies:
     react-native-animatable-promise "^1.2.4"
 

@@ -8,6 +8,7 @@ const styles = {
     backgroundColor: 'rgba(0,0,0,.4)',
     padding: 10,
     margin: 20,
+    marginBottom: 0,
   },
   text: {
     color: 'white',

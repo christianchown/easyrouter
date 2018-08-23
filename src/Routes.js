@@ -1,24 +1,17 @@
 import React from 'react';
+import {View} from 'react-native';
 import EasyRouter from 'react-native-easy-router';
 
 import {Consumer} from './ContextStore';
+
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
-import Intro from './unauth/Intro';
-import Unauthenticated from './unauth/Unauthenticated';
-import LoggedIn from './auth/LoggedIn';
-import LoggedIn2 from './auth/LoggedIn2';
 
-const unauthRoutes = {
-  Intro,
-  Unauthenticated,
-};
-
-const authRoutes = {
-  LoggedIn,
-  LoggedIn2,
-};
+import Intro from './screens/unauth/Intro';
+import Unauthenticated from './screens/unauth/Unauthenticated';
+import LoggedIn from './screens/auth/LoggedIn';
+import LoggedIn2 from './screens/auth/LoggedIn2';
 
 const animations = {
   effect: [
@@ -39,12 +32,25 @@ class Routes extends React.Component {
     super(props);
     this.state = {
       router: undefined,
+      animation: undefined,
+      from: undefined,
+      to: undefined,
     };
     this.drawer = React.createRef();
   }
 
   onStackChange = (stack) => {
-    console.table(stack); // eslint-disable-line no-console
+    this.setState({
+      animation: undefined,
+      from: undefined,
+      to: (stack[stack.length - 1] || {}).route,
+    });
+  };
+
+  onBeforeStackChange = (animation, fromStack, toStack) => {
+    const from = (fromStack[fromStack.length - 1] || {}).route;
+    const to = (toStack[toStack.length - 1] || {}).route;
+    this.setState({animation, from, to});
   };
 
   setRouter = (router) => {
@@ -66,32 +72,45 @@ class Routes extends React.Component {
   render() {
     return (
       <Consumer>
-        {({setAuth, auth}) => (
-          <React.Fragment>
-            {!auth.authenticated && (
+        {({setAuth, auth: {authenticated}}) => (
+          <View style={{backgroundColor: 'black', flex: 1}}>
+            {!authenticated && (
               <EasyRouter
-                routes={unauthRoutes}
+                routes={{
+                  Intro,
+                  Unauthenticated,
+                }}
                 initialRoute="Intro"
                 animations={animations}
                 onStackChange={this.onStackChange}
+                onBeforeStackChange={this.onBeforeStackChange}
                 router={(router) => {
                   this.setRouter(router);
                 }}
               />
             )}
 
-            {auth.authenticated && (
+            {authenticated && (
               <Drawer
-                navigationView={() => (
+                renderNavigationView={() => (
                   <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />
                 )}
                 ref={this.drawer}>
-                <Tabs initialRoute="LoggedIn" router={this.state.router} openDrawer={this.openDrawer}>
+                <Tabs
+                  router={this.state.router}
+                  openDrawer={this.openDrawer}
+                  from={this.state.from}
+                  to={this.state.to}
+                  transition={this.state.animation}>
                   <EasyRouter
-                    routes={authRoutes}
+                    routes={{
+                      LoggedIn,
+                      LoggedIn2,
+                    }}
                     initialRoute="LoggedIn"
                     animations={animations}
                     onStackChange={this.onStackChange}
+                    onBeforeStackChange={this.onBeforeStackChange}
                     router={(router) => {
                       this.setRouter(router);
                     }}
@@ -99,7 +118,7 @@ class Routes extends React.Component {
                 </Tabs>
               </Drawer>
             )}
-          </React.Fragment>
+          </View>
         )}
       </Consumer>
     );

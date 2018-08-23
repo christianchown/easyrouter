@@ -7,7 +7,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       ...initialState,
-      app: this,
       setAuth: this.setAuth,
     };
   }
@@ -22,9 +21,8 @@ export default class App extends React.Component {
   };
 
   render() {
-    const value = this.state;
     return (
-      <Provider value={value}>
+      <Provider value={this.state}>
         <Routes />
       </Provider>
     );
