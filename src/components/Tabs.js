@@ -1,45 +1,44 @@
 import React from 'react';
-import {Easing, Animated, Dimensions, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {Animated, View, Text} from 'react-native';
+import easingFunctions from 'react-native-animatable-promise/easing';
 import baseStyles from './styles';
 import Button from './Button';
 
-const {width} = Dimensions.get('screen');
-
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     flexDirection: 'column-reverse',
   },
   header: {
-    backgroundColor: '#f0e3c4',
-    width,
+    backgroundColor: '#f5c16c',
   },
   tabs: {
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  button: baseStyles.button,
   tab: {
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,
   },
-  tabsText: {
+  underline: {
+    height: 5,
+    width: 1,
+    backgroundColor: '#aa530e',
+    position: 'absolute',
+    bottom: 0,
+    left: -0.5,
+  },
+  tipText: {
     margin: 10,
     fontSize: 13,
     textAlign: 'left',
     color: 'rgba(0,0,0,0.4)',
   },
-  underline: {
-    height: 5,
-    width: 1,
-    backgroundColor: 'red',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-  },
-});
+};
 
-const screenAnimation = {type: 'effect', duration: 1100, easing: 'ease-in-out-back'};
+const screenAnimation = {type: 'effect', duration: 900, easing: 'ease-in-out-back'};
 
 class Tabs extends React.Component {
   state = {
@@ -48,18 +47,14 @@ class Tabs extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const {from, to, transition: {duration} = {}} = this.props;
-    if (
-      from && 
-      to && 
-      from !== to &&
-      (from !== prevProps.from || to !== prevProps.to)
-    ) {
+    const {from, to, transition: {easing, duration} = {}} = this.props;
+    if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
       setTimeout(() => {
         Animated.timing(this.state.animation, {
           toValue: 1,
-          easing: Easing.easeOutBounce,
+          easing: easingFunctions[easing],
           duration,
+          useNativeDriver: true,
         }).start(() => {
           this.setState({animation: new Animated.Value(0)});
         });
@@ -68,18 +63,20 @@ class Tabs extends React.Component {
   }
 
   onLayout = (screen, e) => {
-    const {nativeEvent: {layout}} = e;
+    const {
+      nativeEvent: {layout},
+    } = e;
     this.setState((oldState) => ({
       layouts: {
         ...oldState.layouts,
         [screen]: layout,
       },
     }));
-  };  
+  };
 
   getPos = (screen) => {
     const {layouts} = this.state;
-    return layouts[screen] || {x: -width, width: 0};
+    return layouts[screen] || {x: -10000, width: 0};
   };
 
   pressMenu = () => {
@@ -87,16 +84,12 @@ class Tabs extends React.Component {
   };
 
   press1 = async () => {
-    const {
-      router: {push},
-    } = this.props;
+    const {router: {push} = {}} = this.props;
     await push.LoggedIn({}, screenAnimation);
   };
 
   press2 = async () => {
-    const {
-      router: {push},
-    } = this.props;
+    const {router: {push} = {}} = this.props;
     await push.LoggedIn2({}, screenAnimation);
   };
 
@@ -108,10 +101,10 @@ class Tabs extends React.Component {
     const toPos = this.getPos(to);
     const translateX =
       !from || from === to
-        ? toPos.x || -width
+        ? toPos.x + toPos.width / 2 || -10000
         : animation.interpolate({
             inputRange: [0, 1],
-            outputRange: [fromPos.x, toPos.x],
+            outputRange: [fromPos.x + fromPos.width / 2, toPos.x + toPos.width / 2],
           });
     const scaleX =
       !from || from === to
@@ -125,40 +118,31 @@ class Tabs extends React.Component {
       <View style={styles.container}>
         {children}
         <View style={styles.header}>
+          <View style={styles.tabs}>
+            <Button
+              style={[styles.button, styles.tab]}
+              onPress={this.press1}
+              disabled={to === 'LoggedIn'}
+              onLayout={(layout) => {
+                this.onLayout('LoggedIn', layout);
+              }}
+              text="LoggedIn"
+            />
+            <Button
+              style={[styles.button, styles.tab]}
+              onPress={this.press2}
+              disabled={to === 'LoggedIn2'}
+              onLayout={(layout) => {
+                this.onLayout('LoggedIn2', layout);
+              }}
+              text="Logged In 2"
+            />
+            <Button style={[styles.button, styles.tab]} onPress={this.pressMenu} text="MENU" />
+          </View>
           <View>
-            <View style={styles.tabs}>
-              <View style={styles.tab}>
-                <Button 
-                  onPress={this.press1}
-                  disabled={to === 'LoggedIn'}
-                  onLayout={(layout) => {
-                    this.onLayout('LoggedIn', layout);
-                  }}
-                  text="LoggedIn"
-                />
-              </View>
-
-              <View style={styles.tab}>
-                <Button 
-                  onPress={this.press2}
-                  disabled={to === 'LoggedIn2'}
-                  onLayout={(layout) => {
-                    this.onLayout('LoggedIn2', layout);
-                  }}
-                  text="LoggedIn2"
-                />
-              </View>
-
-              <View style={styles.tab}>
-                <Button 
-                  onPress={this.pressMenu}
-                  text="MENU"
-                />
-              </View>
-            </View>
             <Animated.View style={[styles.underline, {transform: [{translateX}, {scaleX}]}]} />
           </View>
-          <Text style={styles.tabsText}>Click links to push.Screen({JSON.stringify(screenAnimation)})</Text>
+          <Text style={styles.tipText}>Click links to push.Screen({JSON.stringify(screenAnimation)})</Text>
         </View>
       </View>
     );
