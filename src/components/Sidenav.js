@@ -10,11 +10,11 @@ export default ({router, setAuth, closeDrawer}) => (
     <Button
       onPress={() => {
         if (router) {
-          router.push.LoggedIn2({}, animation);
+          router.push.Profile({}, animation);
         }
         closeDrawer();
       }}
-      text={`Click this to push.LoggedIn2({}, ${JSON.stringify(animation)})`}
+      text={`push.Profile({}, ${JSON.stringify(animation)})`}
     />
 
     <Button

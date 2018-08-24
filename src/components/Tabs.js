@@ -10,7 +10,7 @@ const styles = {
     flexDirection: 'column-reverse',
   },
   header: {
-    backgroundColor: '#f5c16c',
+    backgroundColor: '#f6f3a7',
   },
   tabs: {
     flexDirection: 'row',
@@ -49,12 +49,18 @@ class Tabs extends React.Component {
   componentDidUpdate(prevProps) {
     const {from, to, transition: {easing, duration} = {}} = this.props;
     if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
-      Animated.timing(this.state.animation, {
-        toValue: 1,
-        easing: easingFunctions[easing],
-        duration,
-        useNativeDriver: true,
-      }).start();
+      console.log(`animation ${JSON.stringify(this.getPos(from))} ${JSON.stringify(this.getPos(to))}`);
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({animation: new Animated.Value(0)}, () => {
+        Animated.timing(this.state.animation, {
+          toValue: 1,
+          easing: easingFunctions[easing],
+          duration,
+          useNativeDriver: true,
+        }).start();
+      });
+    } else {
+      console.log(`nope ${JSON.stringify(prevProps.from)}->${JSON.stringify(prevProps.to)} / ${JSON.stringify(from)}->${JSON.stringify(to)}`);
     }
   }
 
@@ -79,14 +85,9 @@ class Tabs extends React.Component {
     this.props.openDrawer();
   };
 
-  press1 = async () => {
+  goto = async (screen) => {
     const {router: {push} = {}} = this.props;
-    await push.LoggedIn({}, screenAnimation);
-  };
-
-  press2 = async () => {
-    const {router: {push} = {}} = this.props;
-    await push.LoggedIn2({}, screenAnimation);
+    await push[screen]({}, screenAnimation);
   };
 
   render() {
@@ -117,28 +118,46 @@ class Tabs extends React.Component {
           <View style={styles.tabs}>
             <Button
               style={[styles.button, styles.tab]}
-              onPress={this.press1}
-              disabled={to === 'LoggedIn'}
-              onLayout={(layout) => {
-                this.onLayout('LoggedIn', layout);
+              disabled={to === 'Home'}
+              activeOpacity={0.5}
+              onPress={() => {
+                this.goto('Home');
               }}
-              text="LoggedIn"
+              onLayout={(layout) => {
+                this.onLayout('Home', layout);
+              }}
+              text="Home"
             />
             <Button
               style={[styles.button, styles.tab]}
-              onPress={this.press2}
-              disabled={to === 'LoggedIn2'}
-              onLayout={(layout) => {
-                this.onLayout('LoggedIn2', layout);
+              disabled={to === 'Profile'}
+              activeOpacity={0.5}
+              onPress={() => {
+                this.goto('Profile');
               }}
-              text="Logged In 2"
+              onLayout={(layout) => {
+                this.onLayout('Profile', layout);
+              }}
+              text="Profile"
+            />
+            <Button
+              style={[styles.button, styles.tab]}
+              disabled={to === 'Settings'}
+              activeOpacity={0.5}
+              onPress={() => {
+                this.goto('Settings');
+              }}
+              onLayout={(layout) => {
+                this.onLayout('Settings', layout);
+              }}
+              text="Settings"
             />
             <Button style={[styles.button, styles.tab]} onPress={this.pressMenu} text="MENU" />
           </View>
           <View>
             <Animated.View style={[styles.underline, {transform: [{translateX}, {scaleX}]}]} />
           </View>
-          <Text style={styles.tipText}>Click links to push.Screen({JSON.stringify(screenAnimation)})</Text>
+          <Text style={styles.tipText}>push[screen]({JSON.stringify(screenAnimation)})</Text>
         </View>
       </View>
     );

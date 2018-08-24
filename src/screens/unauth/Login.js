@@ -7,18 +7,18 @@ import Button from '../../components/Button';
 export default ({router}) => (
   <Consumer>
     {({setAuth}) => (
-      <Screen backgroundColor="#155e63" title="Unauthenticated">
+      <Screen backgroundColor="#155e63" title="Login">
         <Button
           onPress={() => {
             setAuth(true);
           }}
-          text="Click this to set authenticated to true"
+          text="Set authenticated to true"
         />
         <Button
           onPress={() => {
             router.pop();
           }}
-          text="Or click this to pop()"
+          text="pop()"
         />
       </Screen>
     )}

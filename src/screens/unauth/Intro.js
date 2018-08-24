@@ -9,9 +9,9 @@ const Intro = ({router}) => (
   <Screen backgroundColor="#59057b" title="Intro">
     <Button
       onPress={() => {
-        router.push.Unauthenticated({}, animation);
+        router.push.Login({}, animation);
       }}
-      text={`Click this to push.Unauthenticated({}, ${JSON.stringify(animation)})`}
+      text={`push.Login({}, ${JSON.stringify(animation)})`}
     />
   </Screen>
 );

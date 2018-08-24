@@ -6,12 +6,12 @@ import Button from '../../components/Button';
 const animation = {type: 'top', duration: 1000};
 
 export default ({router}) => (
-  <Screen backgroundColor="#1b3764" title="LoggedIn">
+  <Screen backgroundColor="#1b3764" title="Home">
     <Button
       onPress={() => {
-        router.push.LoggedIn2({}, animation);
+        router.push.Profile({}, animation);
       }}
-      text={`Click this to push.LoggedIn2({}, ${JSON.stringify(animation)})`}
+      text={`push.Profile({}, ${JSON.stringify(animation)})`}
     />
   </Screen>
 );

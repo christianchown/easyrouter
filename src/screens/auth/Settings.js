@@ -4,12 +4,12 @@ import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 
 export default ({router}) => (
-  <Screen backgroundColor="#59057b" title="LoggedIn2">
+  <Screen backgroundColor="#228c7b" title="Settings">
     <Button
       onPress={() => {
         router.pop();
       }}
-      text="Click this to pop()"
+      text="pop()"
     />
   </Screen>
 );

@@ -9,9 +9,10 @@ import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
 
 import Intro from './screens/unauth/Intro';
-import Unauthenticated from './screens/unauth/Unauthenticated';
-import LoggedIn from './screens/auth/LoggedIn';
-import LoggedIn2 from './screens/auth/LoggedIn2';
+import Login from './screens/unauth/Login';
+import Home from './screens/auth/Home';
+import Profile from './screens/auth/Profile';
+import Settings from './screens/auth/Settings';
 
 const animations = {
   effect: [
@@ -78,7 +79,7 @@ class Routes extends React.Component {
               <EasyRouter
                 routes={{
                   Intro,
-                  Unauthenticated,
+                  Login,
                 }}
                 initialRoute="Intro"
                 animations={animations}
@@ -104,10 +105,11 @@ class Routes extends React.Component {
                   transition={this.state.animation}>
                   <EasyRouter
                     routes={{
-                      LoggedIn,
-                      LoggedIn2,
+                      Home,
+                      Profile,
+                      Settings,
                     }}
-                    initialRoute="LoggedIn"
+                    initialRoute="Home"
                     animations={animations}
                     onStackChange={this.onStackChange}
                     onBeforeStackChange={this.onBeforeStackChange}
