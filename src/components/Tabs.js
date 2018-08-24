@@ -49,7 +49,6 @@ class Tabs extends React.Component {
   componentDidUpdate(prevProps) {
     const {from, to, transition: {easing, duration} = {}} = this.props;
     if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
-      console.log(`animation ${JSON.stringify(this.getPos(from))} ${JSON.stringify(this.getPos(to))}`);
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({animation: new Animated.Value(0)}, () => {
         Animated.timing(this.state.animation, {
@@ -59,8 +58,6 @@ class Tabs extends React.Component {
           useNativeDriver: true,
         }).start();
       });
-    } else {
-      console.log(`nope ${JSON.stringify(prevProps.from)}->${JSON.stringify(prevProps.to)} / ${JSON.stringify(from)}->${JSON.stringify(to)}`);
     }
   }
 
