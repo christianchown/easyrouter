@@ -28,7 +28,7 @@ export default ({router, setAuth, closeDrawer}) => (
       onPress={() => {
         setAuth(false);
       }}
-      text="Or set authenticated to false"
+      text="Set authenticated to false"
     />
   </Screen>
 );

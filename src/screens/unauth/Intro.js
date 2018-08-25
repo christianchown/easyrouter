@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 
 const animation = {type: 'fade', duration: 1200};
 
-const Intro = ({router}) => (
+export default ({router}) => (
   <Screen backgroundColor="#59057b" title="Intro">
     <Button
       onPress={() => {
@@ -15,5 +15,3 @@ const Intro = ({router}) => (
     />
   </Screen>
 );
-
-export default Intro;

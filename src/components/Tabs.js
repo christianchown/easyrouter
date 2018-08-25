@@ -5,6 +5,7 @@ import baseStyles from './styles';
 import Button from './Button';
 
 const styles = {
+  ...baseStyles,
   container: {
     flex: 1,
     flexDirection: 'column-reverse',
@@ -15,12 +16,15 @@ const styles = {
   tabs: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    paddingBottom: 5,
   },
-  button: baseStyles.button,
-  tab: {
-    marginLeft: 10,
-    marginRight: 10,
+  button: {
+    ...baseStyles.button,
     marginTop: 10,
+  },
+  buttonText: {
+    ...baseStyles.text,
+    fontSize: 16,
   },
   underline: {
     height: 5,
@@ -32,19 +36,36 @@ const styles = {
   },
   tipText: {
     margin: 10,
+    marginBottom: 0,
     fontSize: 13,
-    textAlign: 'left',
+    textAlign: 'right',
     color: 'rgba(0,0,0,0.4)',
+    flex: 2,
+    flexWrap: 'wrap',
+  },
+  componentText: {
+    ...baseStyles.text,
+    flex: 1,
+    margin: 10,
+    marginBottom: 0,
+    color: 'rgba(0,0,0,0.4)',
+    textAlign: 'center',
+  },
+  textWrap: {
+    flexDirection: 'row',
   },
 };
 
 const screenAnimation = {type: 'effect', duration: 900, easing: 'ease-in-out-back'};
 
-class Tabs extends React.Component {
-  state = {
-    animation: new Animated.Value(0),
-    layouts: {},
-  };
+export default class Tabs extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      animation: new Animated.Value(0),
+      layouts: {},
+    };
+  }
 
   componentDidUpdate(prevProps) {
     const {from, to, transition: {easing, duration} = {}} = this.props;
@@ -112,9 +133,14 @@ class Tabs extends React.Component {
       <View style={styles.container}>
         {children}
         <View style={styles.header}>
+          <View style={styles.textWrap}>
+            <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
+            <Text style={styles.tipText}>push[screen]({JSON.stringify(screenAnimation)})</Text>
+          </View>
           <View style={styles.tabs}>
             <Button
-              style={[styles.button, styles.tab]}
+              style={styles.button}
+              textStyle={styles.buttonText}
               disabled={to === 'Home'}
               activeOpacity={0.5}
               onPress={() => {
@@ -126,7 +152,8 @@ class Tabs extends React.Component {
               text="Home"
             />
             <Button
-              style={[styles.button, styles.tab]}
+              style={styles.button}
+              textStyle={styles.buttonText}
               disabled={to === 'Profile'}
               activeOpacity={0.5}
               onPress={() => {
@@ -138,7 +165,8 @@ class Tabs extends React.Component {
               text="Profile"
             />
             <Button
-              style={[styles.button, styles.tab]}
+              style={styles.button}
+              textStyle={styles.buttonText}
               disabled={to === 'Settings'}
               activeOpacity={0.5}
               onPress={() => {
@@ -149,16 +177,13 @@ class Tabs extends React.Component {
               }}
               text="Settings"
             />
-            <Button style={[styles.button, styles.tab]} onPress={this.pressMenu} text="MENU" />
+            <Button style={styles.button} textStyle={styles.buttonText} onPress={this.pressMenu} text="MENU" />
           </View>
           <View>
             <Animated.View style={[styles.underline, {transform: [{translateX}, {scaleX}]}]} />
           </View>
-          <Text style={styles.tipText}>push[screen]({JSON.stringify(screenAnimation)})</Text>
         </View>
       </View>
     );
   }
 }
-
-export default Tabs;
