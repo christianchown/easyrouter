@@ -107,12 +107,12 @@ class Tabs extends React.Component<TabsProps, TabsState> {
 
   componentDidUpdate(prevProps: TabsProps) {
     const {from, to, animation: {easing, duration} = {easing: '', duration: 0}} = this.props;
-    if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to) && easing) {
+    if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({animation: new Animated.Value(0)}, () => {
         Animated.timing(this.state.animation, {
           toValue: 1,
-          easing: typeof easing === 'string' ? easingFunctions[easing] : easing,
+          easing: typeof easing === 'string' || easing === undefined ? easingFunctions[easing || 'ease'] : easing,
           duration,
           useNativeDriver: true,
         }).start();
