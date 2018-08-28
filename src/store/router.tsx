@@ -1,5 +1,4 @@
 import {Animation} from 'react-native-easy-router';
-import {loop, Cmd} from 'redux-loop';
 import {OtherAction} from './reducer';
 
 export interface StackAction {

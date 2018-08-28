@@ -7,16 +7,10 @@ import DrawerLayout from 'react-native-drawer-layout-polyfill';
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
-import LoggedIn from './auth/LoggedIn';
-import LoggedIn2 from './auth/LoggedIn2';
-import unauthRoutes from './unauth';
+import authRoutes from './screens/auth';
+import unauthRoutes from './screens/unauth';
 import Retrieval from './retrieval';
 import {Auth, StoreState} from './store';
-
-const authRoutes = {
-  LoggedIn,
-  LoggedIn2,
-};
 
 const animations: CustomAnimations = {
   effect: [
