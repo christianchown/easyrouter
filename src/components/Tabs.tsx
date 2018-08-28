@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Dispatch, bindActionCreators} from 'redux';
 import baseStyles from '../baseStyles';
 import {Router, Animation} from 'react-native-easy-router';
-import easingFunctions from 'react-native-animatable/easing';
+import easingFunctions from './react-native-animatable-easing';
 import {StoreState} from 'store';
 import Button from './Button';
 

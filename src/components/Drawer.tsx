@@ -51,7 +51,7 @@ class Drawer extends React.Component<DrawerProps, State> {
 }
 
 export default React.forwardRef(({enabled, children, ...rest}: DrawerProps, ref?: React.Ref<DrawerLayout>) => (
-  <Drawer enabled={enabled} {...rest}>
+  <Drawer enabled={enabled} forwardedRef={ref} {...rest}>
     {children}
   </Drawer>
 ));

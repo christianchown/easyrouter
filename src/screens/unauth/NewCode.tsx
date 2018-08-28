@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default ({router}: Props) => (
-  <Screen backgroundColor="757882" title="NewCode">
+  <Screen backgroundColor="#757882" title="NewCode">
     <Button
       onPress={() => {
         router.pop();
