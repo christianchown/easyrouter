@@ -14,7 +14,7 @@
     "react-native": "0.55.4",
     "react-native-animatable-promise": "^1.2.4",
     "react-native-drawer-layout-polyfill": "^2.0.0",
-    "react-native-easy-router": "sergeyshpadyrev/react-native-easy-router.git#dev"
+    "react-native-easy-router": "^2.4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

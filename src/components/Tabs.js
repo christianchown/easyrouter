@@ -35,24 +35,25 @@ const styles = {
     left: -0.5,
   },
   tipText: {
-    margin: 10,
-    marginBottom: 0,
+    marginLeft: 10,
     fontSize: 13,
-    textAlign: 'right',
     color: 'rgba(0,0,0,0.4)',
     flex: 2,
     flexWrap: 'wrap',
   },
   componentText: {
-    ...baseStyles.text,
     flex: 1,
-    margin: 10,
     marginBottom: 0,
     color: 'rgba(0,0,0,0.4)',
-    textAlign: 'center',
+    fontSize: 16,
+    textAlign: 'left',
   },
   textWrap: {
     flexDirection: 'row',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 };
 
@@ -133,10 +134,6 @@ export default class Tabs extends React.Component {
       <View style={styles.container}>
         {children}
         <View style={styles.header}>
-          <View style={styles.textWrap}>
-            <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
-            <Text style={styles.tipText}>push[screen]({JSON.stringify(screenAnimation)})</Text>
-          </View>
           <View style={styles.tabs}>
             <Button
               style={styles.button}
@@ -181,6 +178,10 @@ export default class Tabs extends React.Component {
           </View>
           <View>
             <Animated.View style={[styles.underline, {transform: [{translateX}, {scaleX}]}]} />
+          </View>
+          <View style={styles.textWrap}>
+            <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
+            <Text style={styles.tipText}>push[screen]({JSON.stringify(screenAnimation)})</Text>
           </View>
         </View>
       </View>
