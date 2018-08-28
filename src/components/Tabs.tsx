@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 5,
   },
   button: {
     ...baseStyles.button,
@@ -59,6 +58,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
+  underlineWrap: {
+    height: 5,
+  },
 });
 
 const screenAnimation: Animation = {type: 'effect', duration: 900, easing: 'ease-in-out-back'};
@@ -68,16 +70,19 @@ interface Props {
   openDrawer: () => void;
   router: Router;
   tabs: Array<string>;
+}
+
+interface PropsFromState {
   from?: string;
   to?: string;
-  transition?: Animation;
+  animation?: Animation;
 }
 
 interface PropsFromDispatch {
   setTabs: () => void;
 }
 
-type TabsProps = Props & PropsFromDispatch;
+type TabsProps = Props & PropsFromState & PropsFromDispatch;
 
 interface TabsState {
   animation: Animated.Value;
@@ -101,7 +106,7 @@ class Tabs extends React.Component<TabsProps, TabsState> {
   }
 
   componentDidUpdate(prevProps: TabsProps) {
-    const {from, to, transition: {easing, duration} = {easing: '', duration: 0}} = this.props;
+    const {from, to, animation: {easing, duration} = {easing: '', duration: 0}} = this.props;
     if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to) && easing) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({animation: new Animated.Value(0)}, () => {
@@ -210,7 +215,7 @@ class Tabs extends React.Component<TabsProps, TabsState> {
             />
             <Button style={styles.button} textStyle={styles.buttonText} onPress={this.pressMenu} text="MENU" />
           </View>
-          <View>
+          <View style={styles.underlineWrap}>
             <Animated.View style={[styles.underline, {transform: [{translateX}, {scaleX}]}]} />
           </View>
           <View style={styles.textWrap}>
@@ -226,6 +231,12 @@ class Tabs extends React.Component<TabsProps, TabsState> {
   }
 }
 
+const mapStateToProps = ({router}: StoreState): PropsFromState => ({
+  from: router.from ? router.from[router.from.length - 1].route : undefined,
+  to: router.to ? router.to[router.to.length - 1].route : router.stack[router.stack.length - 1].route,
+  animation: router.animation,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch, {tabs}: Props): PropsFromDispatch =>
   bindActionCreators(
     {
@@ -234,7 +245,7 @@ const mapDispatchToProps = (dispatch: Dispatch, {tabs}: Props): PropsFromDispatc
     dispatch,
   );
 
-export default connect<{}, PropsFromDispatch, Props, StoreState>(
-  null,
+export default connect<PropsFromState, PropsFromDispatch, Props, StoreState>(
+  mapStateToProps,
   mapDispatchToProps,
 )(Tabs);

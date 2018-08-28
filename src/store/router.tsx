@@ -13,21 +13,6 @@ export interface TransitionAction {
   animation: Animation;
 }
 
-export interface SetTabsAction {
-  type: 'ROUTER_SET_TABS';
-  tabs: Array<string>;
-}
-
-export interface SetSelectedTabAction {
-  type: 'ROUTER_SET_SELECTED_TAB';
-  selectedTab: number;
-}
-
-export interface SetShowTabAction {
-  type: 'ROUTER_SET_SHOW_TAB';
-  showTab: number;
-}
-
 export interface Route {
   id: string;
   route: string;
@@ -40,16 +25,16 @@ export interface Router {
   stack: Array<Route>;
   tabs: Array<string>;
   animation?: Animation;
-  selectedTab: number;
-  showTab: number;
+  from?: Array<Route>;
+  to?: Array<Route>;
 }
 
 const initialState: Router = {
   stack: [],
   tabs: [],
   animation: undefined,
-  selectedTab: -1,
-  showTab: -1,
+  from: undefined,
+  to: undefined,
 };
 
 export {initialState};
@@ -68,36 +53,16 @@ const reducer = (
           params: route.params,
         })),
         animation: undefined,
+        from: undefined,
+        to: undefined,
       };
 
     case 'ROUTER_TRANSITION':
       return {
         ...state,
         animation: action.animation,
-      };
-
-    case 'ROUTER_SET_TABS':
-      return {
-        ...state,
-        tabs: action.tabs,
-        selectedTab: state.stack.length
-          ? action.tabs.findIndex((tab) => tab === state.stack[state.stack.length - 1].route)
-          : -1,
-        showTab: state.stack.length
-          ? action.tabs.findIndex((tab) => tab === state.stack[state.stack.length - 1].route)
-          : -1,
-      };
-
-    case 'ROUTER_SET_SELECTED_TAB':
-      return {
-        ...state,
-        selectedTab: action.selectedTab,
-      };
-
-    case 'ROUTER_SET_SHOW_TAB':
-      return {
-        ...state,
-        showTab: action.showTab,
+        from: action.from,
+        to: action.to,
       };
 
     default:

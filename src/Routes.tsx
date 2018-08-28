@@ -1,4 +1,5 @@
 import React from 'react';
+import {View} from 'react-native';
 import {Dispatch, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import EasyRouter, {Route, Router, CustomAnimations, Animation} from 'react-native-easy-router';
@@ -81,7 +82,7 @@ class Routes extends React.Component<RoutesProps, State> {
     const {auth, logout} = this.props;
     const {router} = this.state;
     return (
-      <React.Fragment>
+      <View style={{flex: 1, backgroundColor: 'black'}}>
         {!auth.login && (
           <EasyRouter
             routes={unauthRoutes}
@@ -118,7 +119,7 @@ class Routes extends React.Component<RoutesProps, State> {
               </Tabs>
             </Drawer>
           )}
-      </React.Fragment>
+      </View>
     );
   }
 }
