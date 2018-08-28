@@ -1,4 +1,11 @@
 {
-  "name": "easyrouter",
-  "displayName": "Easy Router Test"
+  "expo": {
+    "name": "Easy Router Test",
+    "slug": "easyrouter",
+    "sdkVersion": "28.0.0",
+    "version": "1.0.0",
+    "androidStatusBar": {
+      "backgroundColor": "#000000"
+    }
+  }
 }

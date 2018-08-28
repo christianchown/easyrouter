@@ -1,6 +1,6 @@
 import React from 'react';
-import {Provider, initialState} from './ContextStore';
-import Routes from './Routes';
+import {Provider, initialState} from './src/ContextStore';
+import Routes from './src/Routes';
 
 export default class App extends React.Component {
   constructor(props) {
