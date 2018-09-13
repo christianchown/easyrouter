@@ -19,7 +19,8 @@
     "paths": {
       "react-native-drawer-layout-polyfill": ["../@types/react-native-drawer-layout-polyfill"]
     },
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["./src"],
   "exclude": ["node_modules"]

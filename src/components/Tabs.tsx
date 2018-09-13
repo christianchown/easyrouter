@@ -232,8 +232,8 @@ class Tabs extends React.Component<TabsProps, TabsState> {
 }
 
 const mapStateToProps = ({router}: StoreState): PropsFromState => ({
-  from: router.from ? router.from[router.from.length - 1].route : undefined,
-  to: router.to ? router.to[router.to.length - 1].route : router.stack[router.stack.length - 1].route,
+  from: router.from && router.from.length ? router.from[router.from.length - 1].route : undefined,
+  to: router.to && router.to.length ? router.to[router.to.length - 1].route : router.stack[router.stack.length - 1].route,
   animation: router.animation,
 });
 
