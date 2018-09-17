@@ -33,7 +33,8 @@
     "prettier/prettier": ["error", "fb", {"jsxBracketSameLine": true}],
     "react/prop-types": 0,
     "react/no-unused-state": 0,
-    "react/prefer-stateless-function": 0
+    "react/prefer-stateless-function": 0,
+    "react/destructuring-assignment": 0
   },
   "globals": {
     "fetch": true

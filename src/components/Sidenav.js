@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Screen from '../components/Screen';
-import Button from '../components/Button';
+import Screen from './Screen';
+import Button from './Button';
 
 const animation = {type: 'right', duration: 1100};
 

@@ -57,4 +57,4 @@ buck-out/
 
 # CC
 /*.bat
-/src/react-native-easy-router
+/.expo

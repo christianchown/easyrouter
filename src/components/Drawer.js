@@ -8,7 +8,7 @@ const getWidth = () => {
     return height;
   }
   return width;
-}
+};
 
 class Drawer extends React.Component {
   constructor(props) {
