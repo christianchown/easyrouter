@@ -35,7 +35,7 @@ const auth = {
     const {
       auth: {retrieveAmount},
     } = getState();
-    if (retrieveAmount === 100) {
+    if (retrieveAmount >= 100) {
       dispatch.auth.endRetrieve();
     } else {
       await sleep(100);

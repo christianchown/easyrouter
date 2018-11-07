@@ -8,14 +8,16 @@
     "lint": "eslint src/**/*.* --ext .js --fix"
   },
   "dependencies": {
-    "easy-peasy": "christianchown/easy-peasy.git",
+    "easy-peasy": "^1.3.2",
     "es6-symbol": "^3.1.1",
     "prop-types": "^15.6.2",
     "react": "16.7.0-alpha.0",
     "react-native": "0.57.4",
+    "react-native-animatable-promise": "^1.2.4",
     "react-native-drawer-layout-polyfill": "^2.0.0",
     "react-native-easy-router": "^2.5.0",
-    "react-redux": "^5.1.0"
+    "react-redux": "^5.1.0",
+    "remote-redux-devtools": "^0.5.13"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -31,7 +33,6 @@
     "metro-react-native-babel-preset": "0.49.0",
     "prettier": "^1.10.2",
     "react-dom": "^16.1.1",
-    "react-test-renderer": "16.6.0-alpha.8af6728",
-    "remote-redux-devtools": "^0.5.13"
+    "react-test-renderer": "16.6.0-alpha.8af6728"
   }
 }

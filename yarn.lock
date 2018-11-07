@@ -2010,9 +2010,10 @@ dom-walk@^0.1.0:
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
   integrity sha1-ZyIm3HTI95mtNTB9+TaroRrNYBg=
 
-easy-peasy@christianchown/easy-peasy.git:
-  version "1.3.0"
-  resolved "https://codeload.github.com/christianchown/easy-peasy/tar.gz/201665edcff9365f897e1c078f2e4a6621386196"
+easy-peasy@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/easy-peasy/-/easy-peasy-1.3.2.tgz#747c7e70c8fc8736ee24bba3252b8ffcedef225f"
+  integrity sha512-XwsuIpRsnNz9wnvbZv62IVQ+iwJS4o9rpgbQSzlFB4fKN6hsraNyCFKXu/4g80rBhyHN1+PC8MVOCH/qgzbxwg==
   dependencies:
     immer "^1.7.4"
     memoize-one "^4.0.2"

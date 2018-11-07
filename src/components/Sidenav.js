@@ -1,55 +1,29 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import baseStyles from '../baseStyles';
 
-const styles = StyleSheet.create({
-  container: {
-    ...baseStyles.container,
-    backgroundColor: '#5c3c10',
-  },
-  button: baseStyles.button,
-  text: baseStyles.text,
-});
+import Screen from './Screen';
+import Button from './Button';
 
 const animation = {type: 'right', duration: 1100};
 
-const Sidenav = ({router, logout, closeDrawer}) => (
-  <View style={styles.container}>
-    <Text style={styles.text}>
-      &lt;Sidenav /&gt;
-      {'\n'}
-      {'\n'}
-    </Text>
-
-    <TouchableOpacity
-      style={styles.button}
+export default ({router, logout, closeDrawer}) => (
+  <Screen backgroundColor="#5c3c10" title="Sidenav">
+    <Button
       onPress={() => {
         if (router) {
-          router.push.LoggedIn2({}, animation);
+          router.push.Settings({}, animation);
         }
         closeDrawer();
-      }}>
-      <Text style={styles.text}>
-        Click this text to push.LoggedIn2({'{}'}, {JSON.stringify(animation)})
-      </Text>
-    </TouchableOpacity>
+      }}
+      text={`push.Settings({}, ${JSON.stringify(animation)})`}
+    />
 
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => {
-        closeDrawer();
-      }}>
-      <Text style={styles.text}>Close the drawer</Text>
-    </TouchableOpacity>
+    <Button onPress={closeDrawer} text="Close the drawer" />
 
-    <TouchableOpacity
-      style={styles.button}
+    <Button
       onPress={() => {
         logout();
-      }}>
-      <Text style={styles.text}>Or log out</Text>
-    </TouchableOpacity>
-  </View>
+      }}
+      text="Set authenticated to false"
+    />
+  </Screen>
 );
-
-export default Sidenav;

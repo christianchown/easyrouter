@@ -6,15 +6,9 @@ import EasyRouter from 'react-native-easy-router';
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
-import LoggedIn from './auth/LoggedIn';
-import LoggedIn2 from './auth/LoggedIn2';
-import unauthRoutes from './unauth';
-import Retrieval from './retrieval';
-
-const authRoutes = {
-  LoggedIn,
-  LoggedIn2,
-};
+import unauthRoutes from './screens/unauth';
+import authRoutes from './screens/auth';
+import Retrieval from './screens/Retrieval';
 
 const animations = {
   effect: [
@@ -44,7 +38,7 @@ class Routes extends React.Component {
   };
 
   onBeforeStackChange = (animation, from, to) => {
-    this.props.setTransition(animation, from, to);
+    this.props.setTransition({animation, from, to});
   };
 
   setRouter = (router) => {
@@ -85,12 +79,12 @@ class Routes extends React.Component {
 
         {auth.login && auth.retrieved && (
           <Drawer
-            navigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
+            renderNavigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
             ref={this.drawer}>
-            <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer}>
+            <Tabs initialRoute="Home" router={router} openDrawer={this.openDrawer}>
               <EasyRouter
                 routes={authRoutes}
-                initialRoute="LoggedIn"
+                initialRoute="Home"
                 animations={animations}
                 onStackChange={this.onStackChange}
                 onBeforeStackChange={this.onBeforeStackChange}

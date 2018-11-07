@@ -1,6 +1,8 @@
 const initialState = {
   stack: [],
   animation: undefined,
+  from: undefined,
+  to: undefined,
 };
 
 export {initialState};
@@ -16,8 +18,10 @@ const router = {
     }));
     state.animation = undefined;
   },
-  setTransition: (state, animation) => {
+  setTransition: (state, {animation, from, to}) => {
     state.animation = animation;
+    state.from = from;
+    state.to = to;
   },
 };
 
