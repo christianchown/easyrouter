@@ -1,7 +1,7 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import Routes from './Routes';
-import store from './redux';
+import store from './easypeasy';
 
 export default class App extends React.Component {
   render() {

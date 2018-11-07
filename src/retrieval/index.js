@@ -1,5 +1,4 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import baseStyles from '../baseStyles';
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
   text: baseStyles.text,
 });
 
-const Retrieval = ({retrieveAmount, logout, forceEnd}) => (
+const Retrieval = ({retrieveAmount, logout, endRetrieve}) => (
   <View style={styles.container}>
     <Text style={styles.text}>&lt;Retrieval /&gt;</Text>
 
@@ -31,7 +30,7 @@ const Retrieval = ({retrieveAmount, logout, forceEnd}) => (
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        forceEnd();
+        endRetrieve();
       }}>
       <Text style={styles.text}>Click this to force end</Text>
     </TouchableOpacity>
@@ -40,14 +39,10 @@ const Retrieval = ({retrieveAmount, logout, forceEnd}) => (
   </View>
 );
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      logout: () => ({type: 'AUTH_LOGOUT'}),
-      forceEnd: () => ({type: 'AUTH_END_RETRIEVE'}),
-    },
-    dispatch,
-  );
+const mapDispatchToProps = ({auth: {logout, endRetrieve}}) => ({
+  logout,
+  endRetrieve,
+});
 
 export default connect(
   null,

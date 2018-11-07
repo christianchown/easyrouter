@@ -1,5 +1,5 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
 import EasyRouter from 'react-native-easy-router';
 
@@ -67,7 +67,7 @@ class Routes extends React.Component {
     const {auth, logout} = this.props;
     const {router} = this.state;
     return (
-      <React.Fragment>
+      <View style={{backgroundColor: 'black', flex: 1}}>
         {!auth.login && (
           <EasyRouter
             routes={unauthRoutes}
@@ -83,26 +83,25 @@ class Routes extends React.Component {
 
         {auth.login && !auth.retrieved && <Retrieval router={router} retrieveAmount={auth.retrieveAmount} />}
 
-        {auth.login &&
-          auth.retrieved && (
-            <Drawer
-              navigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
-              ref={this.drawer}>
-              <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer}>
-                <EasyRouter
-                  routes={authRoutes}
-                  initialRoute="LoggedIn"
-                  animations={animations}
-                  onStackChange={this.onStackChange}
-                  onBeforeStackChange={this.onBeforeStackChange}
-                  router={(r) => {
-                    this.setRouter(r);
-                  }}
-                />
-              </Tabs>
-            </Drawer>
-          )}
-      </React.Fragment>
+        {auth.login && auth.retrieved && (
+          <Drawer
+            navigationView={() => <Sidenav logout={logout} router={router} closeDrawer={this.closeDrawer} />}
+            ref={this.drawer}>
+            <Tabs initialRoute="LoggedIn" router={router} openDrawer={this.openDrawer}>
+              <EasyRouter
+                routes={authRoutes}
+                initialRoute="LoggedIn"
+                animations={animations}
+                onStackChange={this.onStackChange}
+                onBeforeStackChange={this.onBeforeStackChange}
+                router={(r) => {
+                  this.setRouter(r);
+                }}
+              />
+            </Tabs>
+          </Drawer>
+        )}
+      </View>
     );
   }
 }
@@ -111,15 +110,11 @@ const mapStateToProps = ({auth}) => ({
   auth,
 });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      setStack: (stack) => ({type: 'ROUTER_STACK', stack}),
-      setTransition: (animation, from, to) => ({type: 'ROUTER_TRANSITION', animation, from, to}),
-      logout: () => ({type: 'AUTH_LOGOUT'}),
-    },
-    dispatch,
-  );
+const mapDispatchToProps = ({auth: {logout}, router: {setStack, setTransition}}) => ({
+  setStack,
+  setTransition,
+  logout,
+});
 
 export default connect(
   mapStateToProps,

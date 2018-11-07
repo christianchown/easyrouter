@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import baseStyles from '../baseStyles';
 import Stack from '../components/Stack';
@@ -30,13 +29,9 @@ const SetPassword = ({login}) => (
   </View>
 );
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      login: () => ({type: 'AUTH_LOGIN'}),
-    },
-    dispatch,
-  );
+const mapDispatchToProps = ({auth: {login}}) => ({
+  login,
+});
 
 export default connect(
   null,

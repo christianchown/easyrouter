@@ -5,26 +5,21 @@
   "license": "WTFPL",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "eslint src/**/*.* --ext .js",
-    "lint_fix": "eslint src/**/*.* --ext .js --fix"
+    "lint": "eslint src/**/*.* --ext .js --fix"
   },
   "dependencies": {
+    "easy-peasy": "christianchown/easy-peasy.git",
     "es6-symbol": "^3.1.1",
     "prop-types": "^15.6.2",
-    "react": "16.3.1",
-    "react-native": "0.55.4",
+    "react": "16.7.0-alpha.0",
+    "react-native": "0.57.4",
     "react-native-drawer-layout-polyfill": "^2.0.0",
-    "react-native-easy-router": "christianchown/react-native-easy-router.git#set-stack",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "redux-loop": "^4.3.3"
+    "react-native-easy-router": "^2.5.0",
+    "react-redux": "^5.1.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.0.1",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react-native": "4.0.0",
-    "babel-preset-stage-0": "^6.24.1",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "23.6.0",
     "eslint": "^4.10.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
@@ -33,10 +28,10 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.4.0",
+    "metro-react-native-babel-preset": "0.49.0",
     "prettier": "^1.10.2",
     "react-dom": "^16.1.1",
-    "react-test-renderer": "^16.1.1",
-    "remote-redux-devtools": "^0.5.13",
-    "remotedev-rn-debugger": "^0.8.3"
+    "react-test-renderer": "16.6.0-alpha.8af6728",
+    "remote-redux-devtools": "^0.5.13"
   }
 }
