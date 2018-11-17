@@ -1,4 +1,10 @@
-const styles = {
+import { ViewStyle, TextStyle } from 'react-native';
+
+const styles: {
+  container: ViewStyle;
+  button: ViewStyle;
+  text: TextStyle;
+} = {
   container: {
     flex: 1,
     justifyContent: 'center',

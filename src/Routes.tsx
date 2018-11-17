@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {connect} from 'react-redux';
-import EasyRouter from 'react-native-easy-router';
+import EasyRouter, { Router, RouterStack, CustomAnimations, Animation } from 'react-native-easy-router';
 
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
@@ -10,7 +10,7 @@ import unauthRoutes from './screens/unauth';
 import authRoutes from './screens/auth';
 import Retrieval from './screens/Retrieval';
 
-const animations = {
+const animations: CustomAnimations = {
   effect: [
     {
       opacity: 0,
@@ -24,8 +24,24 @@ const animations = {
   ],
 };
 
-class Routes extends React.Component {
-  constructor(props) {
+interface PropsFromState {
+  auth: AuthState;
+}
+
+interface PropsFromDispatch {
+  setStack: (stack: RouterStack) => void;
+  setTransition: (transition: {animation: Animation; from: RouterStack; to: RouterStack}) => void;
+  logout: () => void;
+}
+
+type Props = PropsFromState & PropsFromDispatch;
+
+interface State {
+  router: Router | undefined;
+}
+
+class Routes extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       router: undefined,
@@ -33,15 +49,15 @@ class Routes extends React.Component {
     this.drawer = React.createRef();
   }
 
-  onStackChange = (stack) => {
+  onStackChange = (stack: RouterStack) => {
     this.props.setStack(stack);
   };
 
-  onBeforeStackChange = (animation, from, to) => {
+  onBeforeStackChange = (animation: Animation, from: RouterStack, to: RouterStack) => {
     this.props.setTransition({animation, from, to});
   };
 
-  setRouter = (router) => {
+  setRouter = (router: Router) => {
     this.setState({router});
   };
 
@@ -100,7 +116,7 @@ class Routes extends React.Component {
   }
 }
 
-const mapStateToProps = ({auth}) => ({
+const mapStateToProps = ({auth}: ReduxState) => ({
   auth,
 });
 
@@ -110,7 +126,7 @@ const mapDispatchToProps = ({auth: {logout}, router: {setStack, setTransition}})
   logout,
 });
 
-export default connect(
+export default connect<PropsFromState, PropsFromDispatch, {}, ReduxState>(
   mapStateToProps,
   mapDispatchToProps,
 )(Routes);

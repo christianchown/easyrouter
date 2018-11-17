@@ -3,8 +3,16 @@ import {connect} from 'react-redux';
 
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
+import {StoreState} from '../../easypeasy/index';
 
-const SetPassword = ({login}) => (
+
+interface PropsFromDispatch {
+  login: () => void;
+}
+
+type Props = PropsFromDispatch;
+
+const SetPassword: React.SFC<Props> = ({login}) => (
   <Screen backgroundColor="#0f0766" title="SetPassword">
     <Button
       onPress={() => {
@@ -15,11 +23,11 @@ const SetPassword = ({login}) => (
   </Screen>
 );
 
-const mapDispatchToProps = ({auth: {login}}) => ({
+const mapDispatchToProps = ({auth: {login}}: StoreState) => ({
   login,
 });
 
-export default connect(
+export default connect<null, PropsFromDispatch>(
   null,
   mapDispatchToProps,
 )(SetPassword);

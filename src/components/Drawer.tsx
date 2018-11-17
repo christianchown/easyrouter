@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, DrawerLayoutAndroidProps} from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
 
 const getWidth = () => {
@@ -10,8 +10,20 @@ const getWidth = () => {
   return width;
 };
 
-class Drawer extends React.Component {
-  constructor(props) {
+interface OwnProps {
+  enabled?: boolean;
+  forwardedRef?: React.Ref<DrawerLayout>;
+  children: React.ReactNode;
+}
+
+type Props = DrawerLayoutAndroidProps & OwnProps;
+
+interface State {
+  width: number;
+}
+
+class Drawer extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       width: getWidth(),
@@ -33,4 +45,8 @@ class Drawer extends React.Component {
   }
 }
 
-export default React.forwardRef((props, ref) => <Drawer forwardedRef={ref} {...props} />);
+export default React.forwardRef(({enabled, children, ...rest}: Props, ref?: React.Ref<DrawerLayout>) => (
+  <Drawer enabled={enabled} forwardedRef={ref} {...rest}>
+    {children}
+  </Drawer>
+));

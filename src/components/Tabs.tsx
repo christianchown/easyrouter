@@ -1,12 +1,13 @@
 import React from 'react';
-import {Animated, View, Text} from 'react-native';
+import {Animated, View, Text, LayoutChangeEvent, LayoutRectangle, StyleSheet, ViewStyle, TextStyle} from 'react-native';
 import {connect} from 'react-redux';
-import easingFunctions from 'react-native-animatable-promise/easing';
+import {Router, Animation} from 'react-native-easy-router';
 import baseStyles from '../baseStyles';
 import Button from './Button';
+import easingFunctions from './react-native-animatable-easing';
 
-const styles = {
-  ...baseStyles,
+const styles = StyleSheet.create({
+    ...baseStyles,
   container: {
     flex: 1,
     flexDirection: 'column-reverse',
@@ -56,12 +57,38 @@ const styles = {
     paddingLeft: 10,
     paddingRight: 10,
   },
-};
+});
 
-const screenAnimation = {type: 'effect', duration: 900, easing: 'ease-in-out-back'};
+const screenAnimation: Animation = {type: 'effect', duration: 900, easing: 'ease-in-out-back'};
 
-class Tabs extends React.Component {
-  constructor(props) {
+interface OwnProps {
+  initialRoute: string;
+  openDrawer: () => void;
+  router: Router;
+  tabs: Array<string>;
+}
+
+interface PropsFromState {
+  from?: string;
+  to?: string;
+  animation?: Animation;
+}
+
+interface PropsFromDispatch {
+  setTabs: () => void;
+}
+
+type Props = OwnProps & PropsFromState & PropsFromDispatch;
+
+interface State {
+  animation: Animated.Value;
+  layouts: {
+    [tab: string]: LayoutRectangle;
+  }
+}
+
+class Tabs extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       animation: new Animated.Value(0),
@@ -69,14 +96,14 @@ class Tabs extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const {from, to, animation: {easing, duration} = {}} = this.props;
-    if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
+  componentDidUpdate(prevProps: Props) {
+    const {from, to, animation: {easing, duration} = {easing: undefined, duration: 0}} = this.props;
+    if (easing && from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({animation: new Animated.Value(0)}, () => {
         Animated.timing(this.state.animation, {
           toValue: 1,
-          easing: easingFunctions[easing],
+          easing: typeof easing === 'function' ? easing : easingFunctions[easing],
           duration,
           useNativeDriver: true,
         }).start();
@@ -84,7 +111,7 @@ class Tabs extends React.Component {
     }
   }
 
-  onLayout = (screen, e) => {
+  onLayout = (screen: string, e: LayoutChangeEvent) => {
     const {
       nativeEvent: {layout},
     } = e;
@@ -96,7 +123,7 @@ class Tabs extends React.Component {
     }));
   };
 
-  getPos = (screen) => {
+  getPos = (screen: string) => {
     const {layouts} = this.state;
     return layouts[screen] || {x: -10000, width: 0};
   };
@@ -130,8 +157,8 @@ class Tabs extends React.Component {
     const {children, from, to} = this.props;
     const {animation} = this.state;
 
-    const fromPos = this.getPos(from);
-    const toPos = this.getPos(to);
+    const fromPos = this.getPos(from || '');
+    const toPos = this.getPos(to || '');
     const translateX =
       !from || from === to
         ? toPos.x + toPos.width / 2 || -10000
@@ -153,8 +180,8 @@ class Tabs extends React.Component {
         <View style={styles.header}>
           <View style={styles.tabs}>
             <Button
-              style={styles.button}
-              textStyle={styles.buttonText}
+              style={styles.button as ViewStyle}
+              textStyle={styles.buttonText as TextStyle}
               disabled={to === 'Home'}
               activeOpacity={0.5}
               onPress={this.toHome}
@@ -164,8 +191,8 @@ class Tabs extends React.Component {
               text="Home"
             />
             <Button
-              style={styles.button}
-              textStyle={styles.buttonText}
+              style={styles.button as ViewStyle}
+              textStyle={styles.buttonText as TextStyle}
               disabled={to === 'Profile'}
               activeOpacity={0.5}
               onPress={this.toProfile}
@@ -175,8 +202,8 @@ class Tabs extends React.Component {
               text="Profile"
             />
             <Button
-              style={styles.button}
-              textStyle={styles.buttonText}
+              style={styles.button as ViewStyle}
+              textStyle={styles.buttonText as TextStyle}
               disabled={to === 'Settings'}
               activeOpacity={0.5}
               onPress={this.toSettings}
@@ -185,7 +212,7 @@ class Tabs extends React.Component {
               }}
               text="Settings"
             />
-            <Button style={styles.button} textStyle={styles.buttonText} onPress={this.pressMenu} text="MENU" />
+            <Button style={styles.button as ViewStyle} textStyle={styles.buttonText as TextStyle} onPress={this.pressMenu} text="MENU" />
           </View>
           <View>
             <Animated.View style={[styles.underline, {transform: [{translateX}, {scaleX}]}]} />
@@ -203,11 +230,14 @@ class Tabs extends React.Component {
   }
 }
 
-const mapStateToProps = ({router}) => ({
+const mapStateToProps = ({router}: StoreState): PropsFromState => ({
   screen: router.stack[router.stack.length - 1],
   animation: router.animation,
   from: (router.from[router.from.length - 1] || {}).route,
   to: (router.to[router.to.length - 1] || {}).route,
 });
 
-export default connect(mapStateToProps)(Tabs);
+export default connect<PropsFromState, PropsFromDispatch, Props, StoreState>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Tabs);
