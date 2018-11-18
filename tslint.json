@@ -18,6 +18,7 @@
     "no-implicit-dependencies": false,
     "jsx-boolean-value": false,
     "jsx-no-multiline-js": false,
+    "jsx-no-lambda": false,
     "ordered-imports": false,
     "no-submodule-imports": false,
     "no-this-assignment": [true, {"allow-destructuring": true}],
