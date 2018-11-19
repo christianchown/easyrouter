@@ -1,7 +1,7 @@
 import { createStore, reducer, Reducer } from 'easy-peasy';
 import { Action } from 'redux';
 import { composeWithDevTools } from 'remote-redux-devtools';
-import auth, { AuthValues, AuthActions, AuthSelectors, AuthReducers } from './auth';
+import auth, { AuthValues, AuthActions, AuthSelectors } from './auth';
 import router, { RouterValues, RouterActions } from './router';
 
 interface BasicState {
@@ -14,14 +14,9 @@ export interface StoreState {
   basic: Reducer<BasicState>;
 }
 
-export interface StoreReducers {
-  basic: BasicState;
-  auth: AuthReducers;
-}
-
 const compose = composeWithDevTools({ realtime: true });
 
-const store = createStore<StoreState, StoreReducers>(
+const store = createStore<StoreState>(
   {
     auth,
     router,

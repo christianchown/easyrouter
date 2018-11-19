@@ -1,5 +1,5 @@
 import { effect, Effect, select, Select } from 'easy-peasy';
-import { StoreState, StoreReducers } from './index';
+import { StoreState } from './index';
 
 export const initialState = {
   login: false,
@@ -11,10 +11,6 @@ export type AuthValues = typeof initialState;
 
 export interface AuthSelectors {
   inverseRetrieve: Select<number>;
-}
-
-export interface AuthReducers {
-  inverseRetrieve: number;
 }
 
 export interface AuthActions {
@@ -42,7 +38,7 @@ const auth: AuthValues & AuthSelectors & AuthActions = {
     state.retrieveAmount = 100;
     state.retrieved = true;
   },
-  inverseRetrieve: select<AuthValues, number>((state: AuthValues) => {
+  inverseRetrieve: select<AuthValues, number>(state => {
     return 100 - state.retrieveAmount;
   }),
   logout: (state: AuthValues) => {
@@ -50,7 +46,7 @@ const auth: AuthValues & AuthSelectors & AuthActions = {
       state[key as keyof AuthValues] = initialState[key as keyof AuthValues];
     });
   },
-  login: effect<StoreState, StoreReducers>((dispatch, payload, getState) => {
+  login: effect<StoreState>((dispatch, payload, getState) => {
     const a = getState().auth.inverseRetrieve + 1;
     if (a === 3) {
       return;
@@ -59,11 +55,15 @@ const auth: AuthValues & AuthSelectors & AuthActions = {
     dispatch.auth.login();
     dispatch.auth.continueRetrieve(3);
   }),
-  continueRetrieve: effect<StoreState, StoreReducers, number>(async (dispatch, payload, getState) => {
+  continueRetrieve: effect<StoreState, number>(async (dispatch, payload, getState) => {
     const {
-      auth: { retrieveAmount },
+      auth: { retrieveAmount, inverseRetrieve }
     } = getState();
     if (payload) {
+      return;
+    }
+    const b = inverseRetrieve;
+    if (b === 0) {
       return;
     }
     if (retrieveAmount >= 100) {
