@@ -42,7 +42,10 @@ declare module 'easy-peasy' {
   };
 
   // given an easy-peasy Model, extract just the state values
-  type ModelValues<Model> = { [k in keyof Model]: NonFunctionProperties<Model[k]> } & ReducerValues<Model>;
+  type ModelValues<Model> = {
+    [k in keyof Model]: Omit<NonFunctionProperties<Model[k]>, keyof ReducerValues<Model>[k]>
+  } &
+    ReducerValues<Model>;
 
   interface Config<Model> {
     devTools?: boolean;
