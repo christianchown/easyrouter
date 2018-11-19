@@ -58,26 +58,31 @@ declare module 'easy-peasy' {
   // easy-peasy's decorated Redux dispatch() (e.g. dispatch.todos.insert(item); )
   type Dispatch<Model = any> = Redux.Dispatch & ModelActions<Model>;
 
-  type Store<Model = any> = Overwrite<Redux.Store, { dispatch: Dispatch<Model>; getState: () => ModelValues<Model> }>;
+  type Store<Model = any> = Overwrite<
+    Redux.Store,
+    { dispatch: Dispatch<Model>; getState: () => ReadOnly<ModelValues<Model>> }
+  >;
 
   function createStore<Model = any>(model: Model, config: Config<Model>): Store<Model>;
 
   type Effect<Payload = undefined> = Payload extends undefined ? (a: any) => void : (a: any, b: Payload) => void;
 
   function effect<Model = any, Payload = never>(
-    effectAction: (dispatch: Dispatch<Model>, payload: Payload, getState: () => ModelValues<Model>) => void,
+    effectAction: (dispatch: Dispatch<Model>, payload: Payload, getState: () => ReadOnly<ModelValues<Model>>) => void,
   ): Effect<Payload>;
 
   type Reducer<State> = (state: State, action: Redux.Action) => State;
-  function reducer<State>(reducerFunction: Reducer<State>): Reducer<State>;
 
-  type Selector<State = any, T = any> = (state: State) => T;
+  function reducer<State>(reducerFunction: Reducer<State>): Reducer<State>;
 
   type Select<T> = {
     __select__: T; // this type exists purely for SelectPropertyNames/SelectPropertyTypes to be able to pull out the type of T
   };
 
-  function select<State = any, T = any>(selectFunction: Selector<State, T>, dependencies?: Array<Selector>): Select<T>;
+  function select<State = any, T = any>(
+    selectFunction: (state: State) => T,
+    dependencies?: Array<(state: any) => any>,
+  ): Select<T>;
 
   class StoreProvider<Model = any> extends React.Component<{ store: Store<Model> }> {}
 
