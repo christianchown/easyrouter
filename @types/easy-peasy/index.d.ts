@@ -41,15 +41,17 @@ declare module 'easy-peasy' {
     [k in keyof Model]: Omit<FunctionsWithoutFirstParam<FunctionProperties<Model[k]>>, keyof ReducerValues<Model>[k]>
   };
 
-  // given an easy-peasy Model, extract just the state values
-  type ModelValues<Model> = {
+  // given an easy-peasy Model, extract just the state values, minus reducers and select(...)s
+  type ModelValuesWithoutReducers<Model> = {
     [k in keyof Model]: Omit<NonFunctionProperties<Model[k]>, keyof ReducerValues<Model>[k]>
-  } &
-    ReducerValues<Model>;
+  };
+
+  // given an easy-peasy Model, extract just the state values
+  type ModelValues<Model> = ModelValuesWithoutReducers<Model> & ReducerValues<Model>;
 
   interface Config<Model> {
     devTools?: boolean;
-    initialState?: ModelValues<Model>;
+    initialState?: ModelValuesWithoutReducers<Model>;
     injections?: any;
     middleware?: Array<Redux.Middleware>;
     compose?: typeof Redux.compose | Redux.StoreEnhancer | EnhancerFunction;
