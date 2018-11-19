@@ -1,4 +1,4 @@
-import { effect, Effect, select, Select, ModelActions } from 'easy-peasy';
+import { effect, Effect, select, Select } from 'easy-peasy';
 import { StoreState, StoreReducers } from './index';
 
 export const initialState = {

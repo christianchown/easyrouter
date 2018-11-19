@@ -7,53 +7,62 @@ type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : ne
 type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
 type NonFunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T]; // tslint:disable-line:ban-types
 type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+
+// helpers to extract actions and values from easy-peasy models
 type IsMoreThanOneParam<Func> = Func extends (a: any, b: undefined, ...args: Array<any>) => any ? Func : never;
 type FunctionWithoutFirstParam<F> = IsMoreThanOneParam<F> extends () => void
   ? (payload: Param1<F>) => void
   : () => void;
 type FunctionsWithoutFirstParam<T> = { [k in keyof T]: FunctionWithoutFirstParam<T[k]> };
 
+// easy-peasy ModelReducerValues: object mapping functions in the model that get reduced to values
+// e.g. those from select(...) and the state shape of reducer(...)
+type ReducerValues<Model> = { [key in keyof Model]?: any };
+
+// for compose in Config
 type EnhancerFunction = (...funcs: Array<Redux.StoreEnhancer>) => Redux.StoreEnhancer;
 
-type ModelReducers<Model> = { [key in keyof Model]?: any };
-
 declare module 'easy-peasy' {
-  type ModelActions<Model, Reducers extends ModelReducers<Model> = {}> = {
-    [k in keyof Model]: Omit<FunctionsWithoutFirstParam<FunctionProperties<Model[k]>>, keyof Reducers[k]>
+  // given an easy-peasy Model and its ModelReducerValues, extract just the actions
+  type ModelActions<Model, ModelReducerValues extends ReducerValues<Model> = {}> = {
+    [k in keyof Model]: Omit<FunctionsWithoutFirstParam<FunctionProperties<Model[k]>>, keyof ModelReducerValues[k]>
   };
-  type ModelValues<Model, Reducers extends ModelReducers<Model> = {}> = {
+
+  // given an easy-peasy Model and its ModelReducerValues, extract just the state values
+  type ModelValues<Model, ModelReducerValues extends ReducerValues<Model> = {}> = {
     [k in keyof Model]: NonFunctionProperties<Model[k]>
   } &
-    Reducers;
+    ModelReducerValues;
 
-  interface Config<Model> {
+  interface Config<Model, ModelReducerValues extends ReducerValues<Model> = {}> {
     devTools?: boolean;
-    initialState?: ModelValues<Model>;
+    initialState?: ModelValues<Model, ModelReducerValues>;
     injections?: any;
     middleware?: Array<Redux.Middleware>;
     compose?: typeof Redux.compose | Redux.StoreEnhancer | EnhancerFunction;
   }
 
-  type Dispatch<Model = any, Reducers extends ModelReducers<Model> = {}> = Redux.Dispatch &
-    ModelActions<Model, Reducers>;
+  // easy-peasy's decorated Redux dispatch() (e.g. dispatch.todos.insert(item); )
+  type Dispatch<Model = any, ModelReducerValues extends ReducerValues<Model> = {}> = Redux.Dispatch &
+    ModelActions<Model, ModelReducerValues>;
 
-  type Store<Model = any, Reducers extends ModelReducers<Model> = {}> = Overwrite<
+  type Store<Model = any, ModelReducerValues extends ReducerValues<Model> = {}> = Overwrite<
     Redux.Store,
-    { dispatch: Dispatch<Model, Reducers>; getState: () => ModelValues<Model, Reducers> }
+    { dispatch: Dispatch<Model, ModelReducerValues>; getState: () => ModelValues<Model, ModelReducerValues> }
   >;
 
-  function createStore<Model = any, Reducers extends ModelReducers<Model> = {}>(
+  function createStore<Model = any, ModelReducerValues extends ReducerValues<Model> = {}>(
     model: Model,
-    config: Config<Model>,
-  ): Store<Model, Reducers>;
+    config: Config<Model, ModelReducerValues>,
+  ): Store<Model, ModelReducerValues>;
 
   type Effect<Payload = undefined> = Payload extends undefined ? (a: any) => void : (a: any, b: Payload) => void;
 
-  function effect<Model = any, Reducers extends ModelReducers<Model> = {}, Payload = never>(
+  function effect<Model = any, ModelReducerValues extends ReducerValues<Model> = {}, Payload = never>(
     effectAction: (
-      dispatch: Dispatch<Model, Reducers>,
+      dispatch: Dispatch<Model, ModelReducerValues>,
       payload: Payload,
-      getState: () => ModelValues<Model, Reducers>,
+      getState: () => ModelValues<Model, ModelReducerValues>,
     ) => void,
   ): Effect<Payload>;
 
@@ -61,28 +70,25 @@ declare module 'easy-peasy' {
   function reducer<State>(reducerFunction: Reducer<State>): Reducer<State>;
 
   type Select<State = any, T = any> = (state: State) => T;
-  /*
-  type Selector<State = any, T = any> = T & {
-    __select__: true;
-    __selectDependencies__?: Array<Selector>;
-    __selectState__: { parentPath: string; key: string; executed: boolean };
-  };
-  */
+
   type Selector<State = any, T = any> = never;
   export function select<State, T>(
     selectFunction: Select<State, T>,
     dependencies?: Array<Selector>,
   ): Selector<State, T>;
 
-  export class StoreProvider<Model = any, Reducers extends ModelReducers<Model> = {}> extends React.Component<{
-    store: Store<Model, Reducers>;
+  export class StoreProvider<Model = any, ModelReducerValues extends ReducerValues<Model> = {}> extends React.Component<{
+    store: Store<Model, ModelReducerValues>;
   }> {}
 
-  export function useStore<T = any, Model = any, Reducers extends ModelReducers<Model> = {}>(
-    mapState: (state: ModelValues<Model, Reducers>) => T,
-  ): T;
+  export function useStore<StoreValue = any, Model = any, ModelReducerValues extends ReducerValues<Model> = {}>(
+    mapState: (state: ModelValues<Model, ModelReducerValues>) => StoreValue,
+    externals?: Array<any>,
+  ): StoreValue;
 
-  export function useAction<T = any, Model = any, Reducers extends ModelReducers<Model> = {}>(
-    mapAction: (actions: ModelActions<Model, Reducers>) => (payload: T) => void,
-  ): (payload: T) => void;
+  export function useAction<
+    ActionFunction extends Function = () => void,
+    Model = any,
+    ModelReducerValues extends ReducerValues<Model> = {}
+  >(mapAction: (dispatch: ModelActions<Model, ModelReducerValues>) => ActionFunction): ActionFunction;
 }
